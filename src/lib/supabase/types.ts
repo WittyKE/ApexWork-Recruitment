@@ -79,8 +79,6 @@ export interface Candidate {
   headline: string | null;
   location: string | null;
   right_to_work_status: RightToWorkStatus | null;
-  target_salary_min: number | null;
-  target_salary_max: number | null;
   cv_url: string | null;
   cv_filename: string | null;
   certificate_urls: string[];

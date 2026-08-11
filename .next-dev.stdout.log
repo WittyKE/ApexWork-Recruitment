@@ -65,3 +65,7 @@ Creating turbopack project { dir: 'C:\\Users\\user\\apexwork-recruitment', testM
  GET /api/jobs/suggestions?keyword=CA 200 in 15ms (next.js: 6ms, application-code: 9ms)
  GET /api/jobs/suggestions?keyword=IT 200 in 14ms (next.js: 4ms, application-code: 10ms)
  GET / 200 in 508ms (next.js: 22ms, application-code: 487ms)
+ GET / 200 in 148ms (next.js: 8ms, application-code: 140ms)
+ GET / 200 in 220ms (next.js: 32ms, application-code: 188ms)
+ GET / 200 in 181ms (next.js: 27ms, application-code: 154ms)
+ GET / 200 in 217ms (next.js: 9ms, application-code: 208ms)

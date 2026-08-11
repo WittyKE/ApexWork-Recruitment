@@ -123,14 +123,6 @@ export default function PostJobPage() {
               <Label className="font-normal">This role can be performed remotely</Label>
             </div>
 
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <Field label="Salary Min (£)" error={errors.salaryMin?.message}>
-                <Input {...register("salaryMin")} type="number" placeholder="24000" />
-              </Field>
-              <Field label="Salary Max (£)" error={errors.salaryMax?.message}>
-                <Input {...register("salaryMax")} type="number" placeholder="28000" />
-              </Field>
-            </div>
 
             <div className="flex items-center gap-2.5 rounded-lg border bg-muted/30 p-4">
               <Switch checked={visaSponsorship} onCheckedChange={(c) => setValue("visaSponsorship", c)} />

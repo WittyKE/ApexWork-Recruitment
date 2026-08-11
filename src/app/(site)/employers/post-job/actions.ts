@@ -52,8 +52,6 @@ export async function postJob(values: JobPostingValues): Promise<ActionResult> {
     employment_type: data.employmentType,
     location: data.location,
     is_remote: data.isRemote,
-    salary_min: data.salaryMin ?? null,
-    salary_max: data.salaryMax ?? null,
     visa_sponsorship: data.visaSponsorship,
     description: data.description,
     requirements: data.requirements,

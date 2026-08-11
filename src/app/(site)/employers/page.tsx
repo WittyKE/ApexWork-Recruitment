@@ -37,7 +37,7 @@ const SOLUTIONS = [
 ];
 
 const PROCESS = [
-  { step: "1", title: "Post Your Vacancy", description: "Tell us the role, requirements, salary range and whether visa sponsorship is available." },
+  { step: "1", title: "Post Your Vacancy", description: "Tell us the role, requirements, and whether visa sponsorship is available." },
   { step: "2", title: "We Match Candidates", description: "Our platform surfaces right-to-work verified candidates matching your criteria within days." },
   { step: "3", title: "Review & Interview", description: "Review CVs and structured profiles directly, then invite your shortlist to interview." },
   { step: "4", title: "Hire with Confidence", description: "Onboard your new hire knowing all compliance checks have been completed." },

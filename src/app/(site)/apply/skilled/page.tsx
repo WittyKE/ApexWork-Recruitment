@@ -36,8 +36,7 @@ export default function SkilledApplicationPage() {
       location: "",
       headline: "",
       rightToWorkStatus: undefined,
-      targetSalaryMin: undefined,
-      targetSalaryMax: undefined,
+      cvFile: undefined,
       consent: undefined,
     },
   });
@@ -57,7 +56,7 @@ export default function SkilledApplicationPage() {
   async function goNext() {
     const fieldsByStep: (keyof SkilledApplicationValues)[][] = [
       ["fullName", "email", "phone", "location"],
-      ["headline", "rightToWorkStatus", "targetSalaryMin", "targetSalaryMax"],
+      ["headline", "rightToWorkStatus"],
     ];
     const valid = await trigger(fieldsByStep[step - 1]);
     if (valid) setStep((s) => s + 1);
@@ -72,8 +71,6 @@ export default function SkilledApplicationPage() {
     formData.append("location", values.location);
     formData.append("headline", values.headline);
     formData.append("rightToWorkStatus", values.rightToWorkStatus);
-    if (values.targetSalaryMin) formData.append("targetSalaryMin", String(values.targetSalaryMin));
-    if (values.targetSalaryMax) formData.append("targetSalaryMax", String(values.targetSalaryMax));
     formData.append("cvFile", values.cvFile);
 
     const result = await submitSkilledApplication(formData);
@@ -155,14 +152,6 @@ export default function SkilledApplicationPage() {
                     </SelectContent>
                   </Select>
                 </Field>
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="Target Salary Min (£)" error={errors.targetSalaryMin?.message}>
-                    <Input {...register("targetSalaryMin")} type="number" placeholder="35000" />
-                  </Field>
-                  <Field label="Target Salary Max (£)" error={errors.targetSalaryMax?.message}>
-                    <Input {...register("targetSalaryMax")} type="number" placeholder="45000" />
-                  </Field>
-                </div>
               </>
             )}
 

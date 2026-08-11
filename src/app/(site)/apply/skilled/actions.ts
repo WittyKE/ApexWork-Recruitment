@@ -14,8 +14,6 @@ export async function submitSkilledApplication(formData: FormData): Promise<Acti
   const location = String(formData.get("location") || "").trim();
   const headline = String(formData.get("headline") || "").trim();
   const rightToWorkStatus = String(formData.get("rightToWorkStatus") || "").trim();
-  const targetSalaryMin = formData.get("targetSalaryMin");
-  const targetSalaryMax = formData.get("targetSalaryMax");
   const cvFile = formData.get("cvFile");
 
   if (!fullName || !email || !phone || !location || !headline || !rightToWorkStatus) {
@@ -66,8 +64,6 @@ export async function submitSkilledApplication(formData: FormData): Promise<Acti
             headline,
             location,
             right_to_work_status: rightToWorkStatus,
-            target_salary_min: targetSalaryMin ? Number(targetSalaryMin) : null,
-            target_salary_max: targetSalaryMax ? Number(targetSalaryMax) : null,
             cv_url: cvUrl,
             cv_filename: cvFile.name,
           },

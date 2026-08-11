@@ -36,7 +36,7 @@ export default function TermsPage() {
 
         <h2>3. Job Postings</h2>
         <p>
-          Employers are responsible for the accuracy of job listings, including salary ranges, requirements, and
+          Employers are responsible for the accuracy of job listings, including requirements and
           visa sponsorship availability. ApexWork reserves the right to remove listings that violate UK law or our
           content standards.
         </p>

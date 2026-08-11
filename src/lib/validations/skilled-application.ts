@@ -24,8 +24,6 @@ export const skilledStepEligibilitySchema = z.object({
     "other",
   ]),
   headline: z.string().trim().min(2, "Enter your current or target job title"),
-  targetSalaryMin: z.coerce.number().int().positive().optional(),
-  targetSalaryMax: z.coerce.number().int().positive().optional(),
 });
 
 export const skilledStepCvSchema = z.object({
