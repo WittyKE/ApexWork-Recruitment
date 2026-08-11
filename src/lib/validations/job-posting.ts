@@ -18,6 +18,8 @@ export const jobPostingSchema = z.object({
   location: z.string().trim().min(2, "Enter a location"),
   isRemote: z.boolean(),
   visaSponsorship: z.boolean(),
+  salaryMin: z.coerce.number().int().positive().optional(),
+  salaryMax: z.coerce.number().int().positive().optional(),
   description: z.string().trim().min(50, "Description should be at least 50 characters"),
   requirements: z.string().trim().min(10, "List the key requirements"),
   benefits: z.string().trim().optional().or(z.literal("")),
