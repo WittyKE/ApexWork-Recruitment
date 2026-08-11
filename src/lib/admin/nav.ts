@@ -1,0 +1,26 @@
+import {
+  LayoutDashboard,
+  Users,
+  Briefcase,
+  ClipboardList,
+  BarChart3,
+  ScrollText,
+  Settings,
+  type LucideIcon,
+} from "lucide-react";
+
+export interface AdminNavItem {
+  title: string;
+  href: string;
+  icon: LucideIcon;
+}
+
+export const ADMIN_NAV: AdminNavItem[] = [
+  { title: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+  { title: "Users", href: "/admin/users", icon: Users },
+  { title: "Jobs", href: "/admin/jobs", icon: Briefcase },
+  { title: "Applications", href: "/admin/applications", icon: ClipboardList },
+  { title: "Analytics", href: "/admin/analytics", icon: BarChart3 },
+  { title: "Audit Logs", href: "/admin/logs", icon: ScrollText },
+  { title: "Settings", href: "/admin/settings", icon: Settings },
+];
