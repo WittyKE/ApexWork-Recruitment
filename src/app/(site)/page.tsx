@@ -52,8 +52,8 @@ export default async function HomePage() {
                 <Link
                   href="/apply/skilled"
                   className={cn(
-                    buttonVariants({ size: "lg" }),
-                    "group gap-2 shadow-lg shadow-primary/10 transition-all hover:shadow-xl hover:shadow-primary/20 px-3 py-1.5 h-auto sm:h-9"
+                    buttonVariants({ size: "default" }),
+                    "group gap-2 shadow-lg shadow-primary/10 transition-all hover:shadow-xl hover:shadow-primary/20 px-3 py-1.5 h-auto"
                   )}
                 >
                   Upload Your CV (Skilled){" "}
@@ -62,8 +62,8 @@ export default async function HomePage() {
                 <Link
                   href="/apply/essential"
                   className={cn(
-                    buttonVariants({ size: "lg", variant: "outline" }),
-                    "gap-2 border-slate-200 bg-slate-50 text-slate-900 transition-all hover:bg-slate-100 hover:text-slate-950 px-3 py-1.5 h-auto sm:h-9"
+                    buttonVariants({ size: "default", variant: "outline" }),
+                    "gap-2 border-slate-200 bg-slate-50 text-slate-900 transition-all hover:bg-slate-100 hover:text-slate-950 px-3 py-1.5 h-auto"
                   )}
                 >
                   Register for Essential Roles

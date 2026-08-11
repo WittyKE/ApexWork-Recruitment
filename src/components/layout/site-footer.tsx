@@ -33,7 +33,7 @@ export function SiteFooter() {
                 alt="ApexWork Recruitment"
                 width={174}
                 height={44}
-                className="h-9 w-auto object-contain mix-blend-multiply"
+                className="h-9 w-auto object-contain mix-blend-screen brightness-110"
               />
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
