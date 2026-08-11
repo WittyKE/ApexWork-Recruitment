@@ -33,7 +33,7 @@ export default async function HomePage() {
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-            <div className="max-w-2xl space-y-8">
+            <div className="max-w-2xl space-y-8 text-left lg:col-span-2">
               <Badge className="mb-5 gap-1.5 bg-primary/15 text-primary hover:bg-primary/15">
                 <span className="relative flex size-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
@@ -43,14 +43,18 @@ export default async function HomePage() {
               </Badge>
               <div className="space-y-5">
                 <h1 className="text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
-                  Your Gateway to <span className="text-primary">UK Jobs</span> &amp; Global Opportunities
+                  <span className="inline-block whitespace-nowrap">Your Gateway to <span className="text-primary">UK Jobs</span> &amp;</span>
+                  <span className="block">Global Opportunities</span>
                 </h1>
-                <p className="text-lg leading-relaxed text-slate-600">{siteConfig.valueProp}</p>
+                <p className="text-lg leading-relaxed text-slate-600">Whether you're a skilled professional uploading a CV or an essential worker looking for caregiver, security, or labour roles in the UK—we connect talent directly with employer opportunities.</p>
               </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="flex flex-col gap-3 sm:flex-row justify-start">
                 <Link
                   href="/apply/skilled"
-                  className={cn(buttonVariants({ size: "lg" }), "group gap-2 shadow-lg shadow-primary/10 transition-all hover:shadow-xl hover:shadow-primary/20")}
+                  className={cn(
+                    buttonVariants({ size: "lg" }),
+                    "group gap-2 shadow-lg shadow-primary/10 transition-all hover:shadow-xl hover:shadow-primary/20 px-3 py-1.5 h-auto sm:h-9"
+                  )}
                 >
                   Upload Your CV (Skilled){" "}
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
@@ -59,26 +63,18 @@ export default async function HomePage() {
                   href="/apply/essential"
                   className={cn(
                     buttonVariants({ size: "lg", variant: "outline" }),
-                    "gap-2 border-slate-200 bg-slate-50 text-slate-900 transition-all hover:bg-slate-100 hover:text-slate-950"
+                    "gap-2 border-slate-200 bg-slate-50 text-slate-900 transition-all hover:bg-slate-100 hover:text-slate-950 px-3 py-1.5 h-auto sm:h-9"
                   )}
                 >
                   Register for Essential Roles
                 </Link>
               </div>
-              <div className="mt-8 rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
+              <div className="mt-8 w-full max-w-xl rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
                 <HeroSearchBar />
               </div>
             </div>
 
-            <div className="relative h-72 overflow-hidden rounded-3xl shadow-xl sm:h-96 lg:h-[520px]">
-              <Image
-                src="/images/hero-banner.png"
-                alt="ApexWork professionals collaborating"
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
+            {/* hero image removed per request */}
           </div>
         </div>
       </section>
