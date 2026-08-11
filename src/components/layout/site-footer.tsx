@@ -28,7 +28,7 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <div className="w-fit rounded-lg bg-white px-3 py-2">
-              <Image src="/images/logo.png" alt="ApexWork Recruitment Agency" width={174} height={44} className="h-9 w-auto object-contain" />
+              <Image src="/images/logo.png" alt="ApexWork Recruitment" width={174} height={44} className="h-9 w-auto object-contain" />
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
               Your Gateway to UK Jobs &amp; Global Opportunities. We connect skilled professionals and essential
@@ -68,14 +68,14 @@ export function SiteFooter() {
 
         <div className="mt-12 border-t border-slate-800 pt-8">
           <p className="text-xs leading-relaxed text-slate-500">
-            ApexWork Recruitment Agency operates in full compliance with UK employment law, including Right to Work
+            ApexWork Recruitment operates in full compliance with UK employment law, including Right to Work
             verification under the Immigration, Asylum and Nationality Act 2006, GDPR (UK) data protection
             requirements, and Gangmasters and Labour Abuse Authority (GLAA) standards where applicable. All
             candidate data is processed lawfully and securely.
           </p>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-slate-500">
-              &copy; {new Date().getFullYear()} ApexWork Recruitment Agency. All rights reserved.
+              &copy; {new Date().getFullYear()} ApexWork Recruitment. All rights reserved.
             </p>
             <div className="flex gap-4 text-xs text-slate-500">
               <Link href="/privacy" className="hover:text-white">

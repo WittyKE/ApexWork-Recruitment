@@ -110,7 +110,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
               <h3 className="font-semibold">About {job.employer.company_name}</h3>
               {job.employer.industry && <p className="mt-1 text-sm text-muted-foreground">{job.employer.industry}</p>}
               <p className="mt-3 text-sm text-muted-foreground">
-                This employer works with ApexWork Recruitment Agency to source right-to-work verified candidates
+                This employer works with ApexWork Recruitment to source right-to-work verified candidates
                 for UK-based roles.
               </p>
               <Link href={applyHref} className={cn(buttonVariants({ variant: "outline" }), "mt-4 w-full")}>

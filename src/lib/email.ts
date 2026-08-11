@@ -36,7 +36,7 @@ function layout(title: string, bodyHtml: string) {
         ${bodyHtml}
       </div>
       <div style="padding:20px 32px;background:#f9fafb;color:#6b7280;font-size:12px;border-top:1px solid #e5e7eb;">
-        ApexWork Recruitment Agency &middot; ${siteConfig.address.full}<br/>
+        ApexWork Recruitment &middot; ${siteConfig.address.full}<br/>
         ${siteConfig.phone.display}
       </div>
     </div>
@@ -54,7 +54,7 @@ export async function sendApplicationConfirmation(params: {
     layout(
       "We've received your application",
       `<p>Hi ${params.candidateName},</p>
-       <p>Thanks for applying for <strong>${params.jobTitle}</strong> through ApexWork Recruitment Agency. Our team will review your details and be in touch if you're shortlisted.</p>
+       <p>Thanks for applying for <strong>${params.jobTitle}</strong> through ApexWork Recruitment. Our team will review your details and be in touch if you're shortlisted.</p>
        <p>You can expect to hear from us within 5 working days.</p>
        <p>Best regards,<br/>The ApexWork Team</p>`
     )
@@ -108,7 +108,7 @@ export async function sendContactFormAcknowledgement(params: { name: string; ema
     layout(
       "Thanks for contacting ApexWork",
       `<p>Hi ${params.name},</p>
-       <p>Thanks for reaching out to ApexWork Recruitment Agency. A member of our team will get back to you shortly.</p>
+       <p>Thanks for reaching out to ApexWork Recruitment. A member of our team will get back to you shortly.</p>
        <p>If your enquiry is urgent, you can call us on ${siteConfig.phone.display}.</p>`
     )
   );

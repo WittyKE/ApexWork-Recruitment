@@ -31,7 +31,7 @@ export function HeroSearchBar() {
   const trimmedKeyword = keyword.trim();
 
   React.useEffect(() => {
-    if (trimmedKeyword.length < 2) return;
+    if (trimmedKeyword.length < 1) return;
 
     const controller = new AbortController();
 
@@ -80,7 +80,7 @@ export function HeroSearchBar() {
   }
 
   const activeSuggestionResult = suggestionResult?.keyword === trimmedKeyword ? suggestionResult : null;
-  const showSuggestions = !suggestionsDismissed && trimmedKeyword.length >= 2;
+  const showSuggestions = !suggestionsDismissed && trimmedKeyword.length >= 1;
   const isLoading = showSuggestions && !activeSuggestionResult;
 
   return (

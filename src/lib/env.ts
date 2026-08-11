@@ -20,7 +20,7 @@ export const isSupabaseConfigured = Boolean(
 export const isEmailConfigured = Boolean(RESEND_API_KEY && !isPlaceholder(RESEND_API_KEY));
 
 export const siteConfig = {
-  name: "ApexWork Recruitment Agency",
+  name: "ApexWork Recruitment",
   tagline: "Your Gateway to UK Jobs & Global Opportunities.",
   valueProp:
     "Whether you're a skilled professional uploading a CV or an essential worker looking for caregiver, security, or labour roles in the UK—we connect talent directly with employer opportunities.",

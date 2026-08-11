@@ -30,63 +30,55 @@ export default async function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden bg-slate-950 lg:min-h-[calc(100svh-5rem)]">
-        <Image
-          src="/images/hero-banner.png"
-          alt="ApexWork professionals collaborating"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-90"
-        />
-        <div className="absolute inset-0 bg-linear-to-r from-blue-950/80 via-blue-900/50 to-blue-800/10" />
-        <div className="absolute inset-0 bg-linear-to-r from-blue-800/20 via-blue-800/10 to-transparent" />
-        <div className="absolute inset-0 bg-linear-to-r from-blue-800/20 via-blue-800/10 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_65%_at_80%_18%,rgba(2,6,23,0.2),transparent_85%)]" />
-        <div className="absolute inset-0 bg-grid-white opacity-10 mask-[radial-gradient(ellipse_80%_60%_at_20%_0%,black_40%,transparent_100%)]" />
-        <div
-          aria-hidden
-          className="absolute -top-24 left-1/3 size-96 animate-float-slow rounded-full bg-primary/25 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="absolute bottom-0 right-0 size-80 animate-float rounded-full bg-gold/15 blur-3xl"
-        />
-        <div className="relative mx-auto flex max-w-7xl flex-col px-4 py-24 sm:px-6 lg:min-h-[calc(100svh-5rem)] lg:px-8 lg:py-10 xl:py-16">
-          <div className="max-w-2xl animate-in fade-in slide-in-from-bottom-6 duration-700">
-            <Badge className="mb-5 gap-1.5 bg-primary/15 text-primary hover:bg-primary/15">
-              <span className="relative flex size-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex size-1.5 rounded-full bg-primary" />
-              </span>
-              UK-Based Global Recruitment Platform
-            </Badge>
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Your Gateway to <span className="text-primary">UK Jobs</span> &amp; Global Opportunities
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-slate-300">{siteConfig.valueProp}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/apply/skilled"
-                className={cn(buttonVariants({ size: "lg" }), "group gap-2 shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30")}
-              >
-                Upload Your CV (Skilled){" "}
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link
-                href="/apply/essential"
-                className={cn(
-                  buttonVariants({ size: "lg", variant: "outline" }),
-                  "gap-2 border-white/30 bg-white/5 text-white backdrop-blur-sm transition-all hover:bg-white/15 hover:text-white"
-                )}
-              >
-                Register for Essential Roles
-              </Link>
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div className="max-w-2xl space-y-8">
+              <Badge className="mb-5 gap-1.5 bg-primary/15 text-primary hover:bg-primary/15">
+                <span className="relative flex size-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex size-1.5 rounded-full bg-primary" />
+                </span>
+                UK-Based Global Recruitment Platform
+              </Badge>
+              <div className="space-y-5">
+                <h1 className="text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                  Your Gateway to <span className="text-primary">UK Jobs</span> &amp; Global Opportunities
+                </h1>
+                <p className="text-lg leading-relaxed text-slate-600">{siteConfig.valueProp}</p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/apply/skilled"
+                  className={cn(buttonVariants({ size: "lg" }), "group gap-2 shadow-lg shadow-primary/10 transition-all hover:shadow-xl hover:shadow-primary/20")}
+                >
+                  Upload Your CV (Skilled){" "}
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href="/apply/essential"
+                  className={cn(
+                    buttonVariants({ size: "lg", variant: "outline" }),
+                    "gap-2 border-slate-200 bg-slate-50 text-slate-900 transition-all hover:bg-slate-100 hover:text-slate-950"
+                  )}
+                >
+                  Register for Essential Roles
+                </Link>
+              </div>
+              <div className="mt-8 rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
+                <HeroSearchBar />
+              </div>
             </div>
-          </div>
 
-          <div className="mt-16 max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-700 [animation-delay:150ms] fill-mode-both lg:mt-auto lg:pt-8 lg:pb-0">
-            <HeroSearchBar />
+            <div className="relative h-72 overflow-hidden rounded-3xl shadow-xl sm:h-96 lg:h-[520px]">
+              <Image
+                src="/images/hero-banner.png"
+                alt="ApexWork professionals collaborating"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>

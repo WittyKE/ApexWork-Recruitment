@@ -3,7 +3,7 @@ import { siteConfig } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How ApexWork Recruitment Agency collects, uses and protects your personal data, in line with UK GDPR.",
+  description: "How ApexWork Recruitment collects, uses and protects your personal data, in line with UK GDPR.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage() {
 
       <div className="prose prose-slate mt-10 max-w-none dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight">
         <p>
-          ApexWork Recruitment Agency (&quot;ApexWork&quot;, &quot;we&quot;, &quot;us&quot;) is committed to
+          ApexWork Recruitment (&quot;ApexWork&quot;, &quot;we&quot;, &quot;us&quot;) is committed to
           protecting the privacy of candidates, employers and website visitors. This policy explains what personal
           data we collect, why we collect it, and how it is used, in accordance with the UK General Data Protection
           Regulation (UK GDPR) and the Data Protection Act 2018.
@@ -61,7 +61,7 @@ export default function PrivacyPolicyPage() {
 
         <h2>6. Contact Us</h2>
         <p>
-          ApexWork Recruitment Agency, {siteConfig.address.full}
+          ApexWork Recruitment, {siteConfig.address.full}
           <br />
           Phone: {siteConfig.phone.display}
           <br />

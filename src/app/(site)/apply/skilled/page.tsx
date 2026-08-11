@@ -171,7 +171,7 @@ export default function SkilledApplicationPage() {
                     onCheckedChange={(checked) => setValue("consent", checked === true ? true : (undefined as never), { shouldValidate: true })}
                   />
                   <Label htmlFor="consent" className="cursor-pointer text-sm font-normal leading-relaxed">
-                    I consent to ApexWork Recruitment Agency processing my personal data and CV in accordance with
+                    I consent to ApexWork Recruitment processing my personal data and CV in accordance with
                     the{" "}
                     <a href="/privacy" className="text-primary underline">
                       Privacy Policy

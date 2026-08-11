@@ -8,7 +8,7 @@ import { siteConfig } from "@/lib/env";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with ApexWork Recruitment Agency. Visit us at Ermine Business Park, Huntingdon, or call +44 744 636 4856.",
+    "Get in touch with ApexWork Recruitment. Visit us at Ermine Business Park, Huntingdon, or call +44 744 636 4856.",
 };
 
 const mapQuery = encodeURIComponent(siteConfig.address.full);
@@ -65,11 +65,11 @@ export default function ContactPage() {
 
           <Card className="overflow-hidden py-0">
             <div className="relative h-48 w-full">
-              <Image src="/images/office-location.jpg" alt="ApexWork Recruitment Agency office exterior" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
+              <Image src="/images/office-location.jpg" alt="ApexWork Recruitment office exterior" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
             </div>
             <div className="aspect-video w-full">
               <iframe
-                title="ApexWork Recruitment Agency location map"
+                title="ApexWork Recruitment location map"
                 src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
                 className="h-full w-full border-0"
                 loading="lazy"

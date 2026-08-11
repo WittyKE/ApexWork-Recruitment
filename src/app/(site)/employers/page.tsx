@@ -10,7 +10,7 @@ import { siteConfig } from "@/lib/env";
 export const metadata: Metadata = {
   title: "Hiring Solutions for UK Employers",
   description:
-    "Access vetted, right-to-work verified candidates for skilled and essential roles across the UK. Post a job with ApexWork Recruitment Agency today.",
+    "Access vetted, right-to-work verified candidates for skilled and essential roles across the UK. Post a job with ApexWork Recruitment today.",
 };
 
 const SOLUTIONS = [

@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   description: siteConfig.valueProp,
   keywords: [
-    "UK recruitment agency",
+    "UK recruitment firm",
     "UK jobs",
     "visa sponsorship jobs UK",
     "caregiver jobs UK",

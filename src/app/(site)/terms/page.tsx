@@ -3,7 +3,7 @@ import { siteConfig } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "Terms of Service for candidates and employers using the ApexWork Recruitment Agency platform.",
+  description: "Terms of Service for candidates and employers using the ApexWork Recruitment platform.",
 };
 
 export default function TermsPage() {
@@ -16,7 +16,7 @@ export default function TermsPage() {
 
       <div className="prose prose-slate mt-10 max-w-none dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight">
         <p>
-          These Terms of Service govern your use of the ApexWork Recruitment Agency platform, operated from{" "}
+          These Terms of Service govern your use of the ApexWork Recruitment platform, operated from{" "}
           {siteConfig.address.full}. By registering as a candidate, posting a job as an employer, or otherwise
           using our services, you agree to these terms.
         </p>

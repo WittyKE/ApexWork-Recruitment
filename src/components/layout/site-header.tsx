@@ -28,7 +28,7 @@ export function SiteHeader() {
         <Link href="/" className="flex items-center gap-2 shrink-0">
           <Image
             src="/images/logo.png"
-            alt="ApexWork Recruitment Agency"
+            alt="ApexWork Recruitment"
             width={158}
             height={40}
             priority
@@ -70,7 +70,7 @@ export function SiteHeader() {
               <SheetTitle>
                 <Image
                   src="/images/logo.png"
-                  alt="ApexWork Recruitment Agency"
+                  alt="ApexWork Recruitment"
                   width={135}
                   height={34}
                   className="h-9 w-auto object-contain"

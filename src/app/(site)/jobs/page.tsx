@@ -9,7 +9,7 @@ import type { EmploymentType, JobCategory } from "@/lib/supabase/types";
 export const metadata: Metadata = {
   title: "Browse UK Jobs",
   description:
-    "Search live UK job vacancies with ApexWork Recruitment Agency — healthcare, security, gardening, IT, engineering and more, including visa sponsorship roles.",
+    "Search live UK job vacancies with ApexWork Recruitment — healthcare, security, gardening, IT, engineering and more, including visa sponsorship roles.",
 };
 
 const PAGE_SIZE = 9;

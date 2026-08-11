@@ -10,7 +10,7 @@ import { siteConfig } from "@/lib/env";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "ApexWork Recruitment Agency bridges global talent with UK industry needs, operating from Huntingdon with full UK regulatory compliance.",
+    "ApexWork Recruitment bridges global talent with UK industry needs, operating from Huntingdon with full UK regulatory compliance.",
 };
 
 const VALUES = [
@@ -46,7 +46,7 @@ export default function AboutPage() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">About ApexWork Recruitment Agency</h1>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">About ApexWork Recruitment</h1>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
               ApexWork is a UK-based global recruitment and job-matching platform. We exist to bridge the gap
               between international and domestic talent and the industries that need them — from healthcare and
@@ -90,7 +90,7 @@ export default function AboutPage() {
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">UK Regulatory Compliance</h2>
             <p className="mt-4 text-muted-foreground">
-              ApexWork Recruitment Agency operates in full accordance with UK employment and data protection law:
+              ApexWork Recruitment operates in full accordance with UK employment and data protection law:
             </p>
             <ul className="mt-6 space-y-3">
               {[
@@ -127,7 +127,7 @@ export default function AboutPage() {
               <div className="group relative mt-6 aspect-video overflow-hidden rounded-lg">
                 <Image
                   src="/images/office-location.jpg"
-                  alt="ApexWork Recruitment Agency office"
+                  alt="ApexWork Recruitment office"
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
