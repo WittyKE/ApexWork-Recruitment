@@ -27,8 +27,14 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
-            <div className="w-fit rounded-lg bg-white px-3 py-2">
-              <Image src="/images/logo.png" alt="ApexWork Recruitment" width={174} height={44} className="h-9 w-auto object-contain" />
+            <div className="w-fit rounded-lg bg-transparent p-0">
+              <Image
+                src="/images/logo.png"
+                alt="ApexWork Recruitment"
+                width={174}
+                height={44}
+                className="h-9 w-auto object-contain mix-blend-multiply"
+              />
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
               Your Gateway to UK Jobs &amp; Global Opportunities. We connect skilled professionals and essential
