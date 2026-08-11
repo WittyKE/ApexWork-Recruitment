@@ -59,12 +59,6 @@ export function SiteHeader() {
             <Phone className="size-4" />
             {siteConfig.phone.display}
           </a>
-          <Link href="/apply/essential" className={buttonVariants({ variant: "outline", size: "sm" })}>
-            Register for Essential Roles
-          </Link>
-          <Link href="/apply/skilled" className={buttonVariants({ size: "sm" })}>
-            Upload Your CV
-          </Link>
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -104,18 +98,6 @@ export function SiteHeader() {
                 <Phone className="size-4" />
                 {siteConfig.phone.display}
               </a>
-              <div className="mt-4 flex flex-col gap-2">
-                <Link
-                  href="/apply/essential"
-                  onClick={() => setOpen(false)}
-                  className={buttonVariants({ variant: "outline" })}
-                >
-                  Register for Essential Roles
-                </Link>
-                <Link href="/apply/skilled" onClick={() => setOpen(false)} className={buttonVariants({})}>
-                  Upload Your CV
-                </Link>
-              </div>
             </div>
           </SheetContent>
         </Sheet>
