@@ -194,6 +194,12 @@ export const APPLICATION_STATUS_LABELS: Record<ApplicationStatus, string> = {
   withdrawn: "Withdrawn",
 };
 
+export function isJobAcceptingApplications(job: Pick<Job, "status" | "expires_at">): boolean {
+  if (job.status !== "published") return false;
+  if (job.expires_at && new Date(job.expires_at) < new Date()) return false;
+  return true;
+}
+
 export const RIGHT_TO_WORK_LABELS: Record<RightToWorkStatus, string> = {
   uk_citizen: "UK Citizen",
   settled_status: "Settled Status",

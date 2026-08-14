@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { buttonVariants } from "@/components/ui/button";
 import { JobCard } from "@/components/site/job-card";
 import { getJobBySlug, getRelatedJobs } from "@/lib/data/jobs";
-import { EMPLOYMENT_TYPE_LABELS, JOB_CATEGORY_LABELS } from "@/lib/supabase/types";
+import { EMPLOYMENT_TYPE_LABELS, isJobAcceptingApplications, JOB_CATEGORY_LABELS } from "@/lib/supabase/types";
 import { cn } from "@/lib/utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -28,6 +28,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
 
   const relatedJobs = await getRelatedJobs(job, 3);
   const applyHref = `/apply/skilled?job=${job.slug}`;
+  const acceptingApplications = isJobAcceptingApplications(job);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
@@ -66,9 +67,21 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
             )}
           </div>
         </div>
-        <Link href={applyHref} className={cn(buttonVariants({ size: "lg" }), "w-full shrink-0 sm:w-auto")}>
-          Apply Now
-        </Link>
+        {acceptingApplications ? (
+          <Link href={applyHref} className={cn(buttonVariants({ size: "lg" }), "w-full shrink-0 sm:w-auto")}>
+            Apply Now
+          </Link>
+        ) : (
+          <span
+            className={cn(
+              buttonVariants({ size: "lg", variant: "outline" }),
+              "w-full shrink-0 cursor-not-allowed opacity-60 sm:w-auto"
+            )}
+            aria-disabled="true"
+          >
+            Applications Closed
+          </span>
+        )}
       </div>
 
       <div className="mt-6 flex flex-wrap gap-2">
@@ -78,7 +91,19 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
             <ShieldCheck className="size-3" /> Visa Sponsorship Available
           </Badge>
         )}
+        {!acceptingApplications && (
+          <Badge className="bg-rose-100 text-rose-700 hover:bg-rose-100 dark:bg-rose-500/15 dark:text-rose-400">
+            {job.status === "closed" ? "Position Closed" : "No Longer Accepting Applications"}
+          </Badge>
+        )}
       </div>
+
+      {!acceptingApplications && (
+        <p className="mt-4 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-400">
+          This position is no longer accepting applications. Browse similar roles below, or register your interest so
+          we can match you against future opportunities.
+        </p>
+      )}
 
       <Separator className="my-8" />
 
@@ -113,9 +138,18 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
                 This employer works with ApexWork Recruitment to source right-to-work verified candidates
                 for UK-based roles.
               </p>
-              <Link href={applyHref} className={cn(buttonVariants({ variant: "outline" }), "mt-4 w-full")}>
-                Apply for this role
-              </Link>
+              {acceptingApplications ? (
+                <Link href={applyHref} className={cn(buttonVariants({ variant: "outline" }), "mt-4 w-full")}>
+                  Apply for this role
+                </Link>
+              ) : (
+                <span
+                  className={cn(buttonVariants({ variant: "outline" }), "mt-4 w-full cursor-not-allowed opacity-60")}
+                  aria-disabled="true"
+                >
+                  Applications Closed
+                </span>
+              )}
             </CardContent>
           </Card>
 
