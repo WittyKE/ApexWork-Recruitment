@@ -25,70 +25,70 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { DataTable } from "@/components/admin/data-table";
-import { ApplicationDetailSheet } from "@/components/admin/applications/application-detail-sheet";
-import { APPLICATION_STATUS_LABELS, type ApplicationStatus } from "@/lib/supabase/types";
-import { applicationStatusColors, type AdminApplicationRow } from "@/lib/mock-data";
-import { deleteApplication, updateApplicationStatus } from "@/app/admin/applications/actions";
+import { EnquiryDetailSheet } from "@/components/admin/enquiries/enquiry-detail-sheet";
+import type { ContactMessage, ContactStatus } from "@/lib/supabase/types";
+import { CONTACT_STATUS_LABELS, contactStatusColors } from "@/lib/admin/contact-status";
+import { deleteEnquiry, updateEnquiryStatus } from "@/app/admin/enquiries/actions";
 import { useSyncedState } from "@/lib/hooks/use-synced-state";
 
-export function ApplicationsTable({ initialApplications }: { initialApplications: AdminApplicationRow[] }) {
-  const [applications] = useSyncedState(initialApplications);
+export function EnquiriesTable({ initialEnquiries }: { initialEnquiries: ContactMessage[] }) {
+  const [enquiries] = useSyncedState(initialEnquiries);
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
-  const [viewingApplication, setViewingApplication] = React.useState<AdminApplicationRow | null>(null);
-  const [deletingApplication, setDeletingApplication] = React.useState<AdminApplicationRow | null>(null);
+  const [viewingEnquiry, setViewingEnquiry] = React.useState<ContactMessage | null>(null);
+  const [deletingEnquiry, setDeletingEnquiry] = React.useState<ContactMessage | null>(null);
   const [isPending, startTransition] = React.useTransition();
 
-  const filtered = applications.filter((a) => statusFilter === "all" || a.status === statusFilter);
+  const filtered = enquiries.filter((e) => statusFilter === "all" || e.status === statusFilter);
 
-  function handleStatusChange(id: string, status: ApplicationStatus) {
+  function handleStatusChange(id: string, status: ContactStatus) {
     startTransition(async () => {
-      const result = await updateApplicationStatus(id, status);
+      const result = await updateEnquiryStatus(id, status);
       if (result.success) toast.success(result.message);
       else toast.error(result.message);
     });
   }
 
   function handleDelete() {
-    if (!deletingApplication) return;
-    const id = deletingApplication.id;
-    setDeletingApplication(null);
+    if (!deletingEnquiry) return;
+    const id = deletingEnquiry.id;
+    setDeletingEnquiry(null);
     startTransition(async () => {
-      const result = await deleteApplication(id);
+      const result = await deleteEnquiry(id);
       if (result.success) toast.success(result.message);
       else toast.error(result.message);
     });
   }
 
-  const columns: ColumnDef<AdminApplicationRow>[] = [
+  const columns: ColumnDef<ContactMessage>[] = [
     {
-      accessorKey: "candidate_name",
+      accessorKey: "name",
       header: ({ column }) => (
         <Button variant="ghost" size="sm" className="-ml-3 gap-1" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Candidate <ArrowUpDown className="size-3.5" />
+          From <ArrowUpDown className="size-3.5" />
         </Button>
       ),
-      cell: ({ row }) => <span className="font-medium">{row.original.candidate_name}</span>,
-    },
-    {
-      accessorKey: "job_title",
-      header: "Job",
       cell: ({ row }) => (
         <div>
-          <p className="text-sm">{row.original.job_title}</p>
-          <p className="text-xs text-muted-foreground">{row.original.employer_company_name}</p>
+          <p className="font-medium">{row.original.name}</p>
+          <p className="text-xs text-muted-foreground">{row.original.email}</p>
         </div>
       ),
     },
     {
-      accessorKey: "applied_at",
+      accessorKey: "subject",
+      header: "Subject",
+      cell: ({ row }) => <span className="text-sm">{row.original.subject || "General enquiry"}</span>,
+    },
+    {
+      accessorKey: "created_at",
       header: ({ column }) => (
         <Button variant="ghost" size="sm" className="-ml-3 gap-1" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Applied <ArrowUpDown className="size-3.5" />
+          Received <ArrowUpDown className="size-3.5" />
         </Button>
       ),
       cell: ({ row }) => (
         <span className="text-sm text-muted-foreground">
-          {new Date(row.original.applied_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+          {new Date(row.original.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
         </span>
       ),
     },
@@ -97,11 +97,11 @@ export function ApplicationsTable({ initialApplications }: { initialApplications
       header: "Status",
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <Badge className={applicationStatusColors[row.original.status]}>{APPLICATION_STATUS_LABELS[row.original.status]}</Badge>
-          <Select value={row.original.status} onValueChange={(v) => handleStatusChange(row.original.id, v as ApplicationStatus)} disabled={isPending}>
+          <Badge className={contactStatusColors[row.original.status]}>{CONTACT_STATUS_LABELS[row.original.status]}</Badge>
+          <Select value={row.original.status} onValueChange={(v) => handleStatusChange(row.original.id, v as ContactStatus)} disabled={isPending}>
             <SelectTrigger className="h-7 w-8 border-none bg-transparent p-0 shadow-none [&>svg]:mx-auto [&_span]:hidden" aria-label="Change status" />
             <SelectContent>
-              {Object.entries(APPLICATION_STATUS_LABELS).map(([value, label]) => (
+              {Object.entries(CONTACT_STATUS_LABELS).map(([value, label]) => (
                 <SelectItem key={value} value={value}>
                   {label}
                 </SelectItem>
@@ -120,12 +120,12 @@ export function ApplicationsTable({ initialApplications }: { initialApplications
               <MoreHorizontal className="size-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setViewingApplication(row.original)}>
+              <DropdownMenuItem onClick={() => setViewingEnquiry(row.original)}>
                 <Eye /> View
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem variant="destructive" onClick={() => setDeletingApplication(row.original)}>
-                <Trash2 /> Remove
+              <DropdownMenuItem variant="destructive" onClick={() => setDeletingEnquiry(row.original)}>
+                <Trash2 /> Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -139,16 +139,16 @@ export function ApplicationsTable({ initialApplications }: { initialApplications
       <DataTable
         columns={columns}
         data={filtered}
-        searchPlaceholder="Search by candidate or job title..."
-        exportFilename="applications"
+        searchPlaceholder="Search enquiries by name, email or subject..."
+        exportFilename="enquiries"
         toolbar={
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v ?? "all")}>
-            <SelectTrigger className="w-44">
+            <SelectTrigger className="w-40">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Status</SelectItem>
-              {Object.entries(APPLICATION_STATUS_LABELS).map(([value, label]) => (
+              {Object.entries(CONTACT_STATUS_LABELS).map(([value, label]) => (
                 <SelectItem key={value} value={value}>
                   {label}
                 </SelectItem>
@@ -158,23 +158,19 @@ export function ApplicationsTable({ initialApplications }: { initialApplications
         }
       />
 
-      <ApplicationDetailSheet
-        application={viewingApplication}
-        open={!!viewingApplication}
-        onOpenChange={(open) => !open && setViewingApplication(null)}
-      />
+      <EnquiryDetailSheet enquiry={viewingEnquiry} open={!!viewingEnquiry} onOpenChange={(open) => !open && setViewingEnquiry(null)} />
 
-      <AlertDialog open={!!deletingApplication} onOpenChange={(open) => !open && setDeletingApplication(null)}>
+      <AlertDialog open={!!deletingEnquiry} onOpenChange={(open) => !open && setDeletingEnquiry(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Remove this application?</AlertDialogTitle>
+            <AlertDialogTitle>Delete this enquiry?</AlertDialogTitle>
             <AlertDialogDescription>
-              This removes the application record for {deletingApplication?.candidate_name}. This action cannot be undone.
+              This permanently removes the message from {deletingEnquiry?.name}. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>Remove</AlertDialogAction>
+            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

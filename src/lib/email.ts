@@ -1,6 +1,7 @@
 import "server-only";
 import { Resend } from "resend";
 import { RESEND_API_KEY, isEmailConfigured, siteConfig } from "@/lib/env";
+import { APPLICATION_STATUS_LABELS, type ApplicationStatus } from "@/lib/supabase/types";
 
 const FROM_ADDRESS = process.env.RESEND_FROM_EMAIL || "ApexWork Recruitment <notifications@apexworkrecruitment.co.uk>";
 
@@ -37,7 +38,7 @@ function layout(title: string, bodyHtml: string) {
       </div>
       <div style="padding:20px 32px;background:#f9fafb;color:#6b7280;font-size:12px;border-top:1px solid #e5e7eb;">
         ApexWork Recruitment &middot; ${siteConfig.address.full}<br/>
-        ${siteConfig.phone.display}
+        ${siteConfig.phones.map((phone) => phone.display).join(" / ")}
       </div>
     </div>
   </div>`;
@@ -109,7 +110,7 @@ export async function sendContactFormAcknowledgement(params: { name: string; ema
       "Thanks for contacting ApexWork",
       `<p>Hi ${params.name},</p>
        <p>Thanks for reaching out to ApexWork Recruitment. A member of our team will get back to you shortly.</p>
-       <p>If your enquiry is urgent, you can call us on ${siteConfig.phone.display}.</p>`
+       <p>If your enquiry is urgent, you can call us on ${siteConfig.phones.map((phone) => phone.display).join(" or ")}.</p>`
     )
   );
 }
@@ -122,6 +123,36 @@ export async function sendJobPostedConfirmation(params: { employerEmail: string;
       "Your job posting is live",
       `<p>Hi ${params.companyName} team,</p>
        <p>Your job listing <strong>${params.jobTitle}</strong> has been submitted and is now visible to candidates on ApexWork.</p>`
+    )
+  );
+}
+
+export async function sendApplicationStatusUpdate(params: {
+  candidateEmail: string;
+  candidateName: string;
+  jobTitle: string;
+  status: ApplicationStatus;
+}) {
+  return send(
+    params.candidateEmail,
+    `Update on your application: ${params.jobTitle}`,
+    layout(
+      "Your application status has changed",
+      `<p>Hi ${params.candidateName},</p>
+       <p>Your application for <strong>${params.jobTitle}</strong> has moved to: <strong>${APPLICATION_STATUS_LABELS[params.status]}</strong>.</p>
+       <p>Our team will be in touch with next steps.</p>`
+    )
+  );
+}
+
+export async function sendEnquiryResolvedNotification(params: { name: string; email: string; subject: string }) {
+  return send(
+    params.email,
+    `Re: ${params.subject}`,
+    layout(
+      "Your enquiry has been resolved",
+      `<p>Hi ${params.name},</p>
+       <p>We've marked your enquiry "<strong>${params.subject}</strong>" as resolved. If you need anything further, just reply to this email or contact us directly.</p>`
     )
   );
 }

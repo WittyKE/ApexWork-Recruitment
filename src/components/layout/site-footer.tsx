@@ -45,10 +45,12 @@ export function SiteFooter() {
                 <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
                 <span>{siteConfig.address.full}</span>
               </div>
-              <a href={siteConfig.phone.href} className="flex items-center gap-2.5 hover:text-white">
-                <Phone className="size-4 shrink-0 text-primary" />
-                {siteConfig.phone.display}
-              </a>
+              {siteConfig.phones.map((phone) => (
+                <a key={phone.href} href={phone.href} className="flex items-center gap-2.5 hover:text-white">
+                  <Phone className="size-4 shrink-0 text-primary" />
+                  {phone.display}
+                </a>
+              ))}
               <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-2.5 hover:text-white">
                 <Mail className="size-4 shrink-0 text-primary" />
                 {siteConfig.email}

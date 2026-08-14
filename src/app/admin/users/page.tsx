@@ -4,8 +4,13 @@ import { getAdminUsers } from "@/lib/data/admin";
 
 export const metadata: Metadata = { title: "Users" };
 
-export default async function AdminUsersPage() {
-  const users = await getAdminUsers();
+export default async function AdminUsersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const [users, params] = await Promise.all([getAdminUsers(), searchParams]);
+  const createEmployer = params.create === "employer";
 
   return (
     <div className="space-y-6">
@@ -13,7 +18,7 @@ export default async function AdminUsersPage() {
         <h1 className="text-2xl font-bold tracking-tight">User Management</h1>
         <p className="text-sm text-muted-foreground">Manage candidates, employers and staff accounts.</p>
       </div>
-      <UsersTable initialUsers={users} />
+      <UsersTable initialUsers={users} initialCreateEmployer={createEmployer} />
     </div>
   );
 }

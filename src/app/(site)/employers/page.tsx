@@ -131,9 +131,11 @@ export default function EmployersPage() {
             <Link href="/employers/post-job" className={cn(buttonVariants({ size: "lg" }), "shadow-lg shadow-primary/20")}>
               Post a Job
             </Link>
-            <a href={siteConfig.phone.href} className={buttonVariants({ size: "lg", variant: "outline" })}>
-              Call {siteConfig.phone.display}
-            </a>
+            {siteConfig.phones.map((phone) => (
+              <a key={phone.href} href={phone.href} className={buttonVariants({ size: "lg", variant: "outline" })}>
+                Call {phone.display}
+              </a>
+            ))}
           </div>
         </div>
       </section>

@@ -66,7 +66,7 @@ export default function TermsPage() {
         <h2>8. Contact</h2>
         <p>
           Questions about these terms can be sent to <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>{" "}
-          or by phone on {siteConfig.phone.display}.
+          or by phone on {siteConfig.phones.map((phone) => phone.display).join(" or ")}.
         </p>
       </div>
     </div>

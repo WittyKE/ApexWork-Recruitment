@@ -42,8 +42,8 @@ export default async function AdminDashboardPage() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard label="Total Revenue" value={stats.kpis.totalRevenue.value} change={stats.kpis.totalRevenue.change} icon={TrendingUp} format="currency" />
-        <KpiCard label="Active Users" value={stats.kpis.activeUsers.value} change={stats.kpis.activeUsers.change} icon={Users} />
-        <KpiCard label="Conversions (Hires)" value={stats.kpis.conversions.value} change={stats.kpis.conversions.change} icon={ClipboardList} />
+        <KpiCard label="Active Users" value={stats.counts.totalUsers} change={stats.kpis.activeUsers.change} icon={Users} />
+        <KpiCard label="Conversions (Hires)" value={stats.counts.hired} change={stats.kpis.conversions.change} icon={ClipboardList} />
         <KpiCard label="Bounce Rate" value={stats.kpis.bounceRate.value} change={stats.kpis.bounceRate.change} icon={Briefcase} format="percent" />
       </div>
 

@@ -52,13 +52,16 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <a
-            href={siteConfig.phone.href}
-            className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary"
-          >
-            <Phone className="size-4" />
-            {siteConfig.phone.display}
-          </a>
+          {siteConfig.phones.map((phone) => (
+            <a
+              key={phone.href}
+              href={phone.href}
+              className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary"
+            >
+              <Phone className="size-4" />
+              {phone.display}
+            </a>
+          ))}
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -91,13 +94,16 @@ export function SiteHeader() {
                   {link.label}
                 </Link>
               ))}
-              <a
-                href={siteConfig.phone.href}
-                className="flex items-center gap-2 rounded-md px-3 py-2.5 text-base font-medium text-muted-foreground hover:bg-accent"
-              >
-                <Phone className="size-4" />
-                {siteConfig.phone.display}
-              </a>
+              {siteConfig.phones.map((phone) => (
+                <a
+                  key={phone.href}
+                  href={phone.href}
+                  className="flex items-center gap-2 rounded-md px-3 py-2.5 text-base font-medium text-muted-foreground hover:bg-accent"
+                >
+                  <Phone className="size-4" />
+                  {phone.display}
+                </a>
+              ))}
             </div>
           </SheetContent>
         </Sheet>

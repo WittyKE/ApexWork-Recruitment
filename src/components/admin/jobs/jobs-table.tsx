@@ -28,88 +28,75 @@ import { DataTable } from "@/components/admin/data-table";
 import { JobFormDialog } from "@/components/admin/jobs/job-form-dialog";
 import { EMPLOYMENT_TYPE_LABELS, JOB_CATEGORY_LABELS, type JobStatus, type JobWithEmployer } from "@/lib/supabase/types";
 import type { AdminJobValues } from "@/lib/validations/admin-job";
+import type { EmployerOption } from "@/lib/data/admin/jobs";
+import { JOB_STATUS_STYLES } from "@/lib/admin/job-status";
+import { useSyncedState } from "@/lib/hooks/use-synced-state";
+import {
+  bulkDeleteAdminJobs,
+  bulkUpdateAdminJobStatus,
+  createAdminJob,
+  deleteAdminJob,
+  updateAdminJob,
+} from "@/app/admin/jobs/actions";
 
-const STATUS_STYLES: Record<JobStatus, string> = {
-  draft: "bg-slate-100 text-slate-700 dark:bg-slate-500/15 dark:text-slate-400",
-  published: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
-  closed: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
-  archived: "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400",
-};
-
-export function JobsTable({ initialJobs }: { initialJobs: JobWithEmployer[] }) {
-  const [jobs, setJobs] = React.useState(initialJobs);
+export function JobsTable({ initialJobs, employers }: { initialJobs: JobWithEmployer[]; employers: EmployerOption[] }) {
+  const [jobs] = useSyncedState(initialJobs);
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
   const [editingJob, setEditingJob] = React.useState<JobWithEmployer | null>(null);
   const [deletingJob, setDeletingJob] = React.useState<JobWithEmployer | null>(null);
   const [selectedRows, setSelectedRows] = React.useState<JobWithEmployer[]>([]);
   const [bulkDeleteOpen, setBulkDeleteOpen] = React.useState(false);
+  const [isPending, startTransition] = React.useTransition();
 
   const filtered = jobs.filter((j) => statusFilter === "all" || j.status === statusFilter);
 
   function handleAdd(values: AdminJobValues) {
-    const newJob: JobWithEmployer = {
-      id: `job-${Date.now()}`,
-      employer_id: jobs[0]?.employer_id ?? "emp-1",
-      title: values.title,
-      slug: values.title.toLowerCase().replace(/\s+/g, "-"),
-      category: values.category,
-      employment_type: values.employmentType,
-      location: values.location,
-      is_remote: false,
-      visa_sponsorship: values.visaSponsorship,
-      description: "",
-      requirements: null,
-      benefits: null,
-      status: values.status,
-      published_at: values.status === "published" ? new Date().toISOString() : null,
-      expires_at: null,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      employer: jobs[0]?.employer ?? { id: "emp-1", company_name: "ApexWork Demo Employer", industry: null, is_verified: true },
-    };
-    setJobs((prev) => [newJob, ...prev]);
-    toast.success(`"${values.title}" was created.`);
+    startTransition(async () => {
+      const result = await createAdminJob(values);
+      if (result.success) toast.success(result.message);
+      else toast.error(result.message);
+    });
   }
 
   function handleEdit(values: AdminJobValues) {
     if (!editingJob) return;
-    setJobs((prev) =>
-      prev.map((j) =>
-        j.id === editingJob.id
-          ? {
-              ...j,
-              title: values.title,
-              category: values.category,
-              employment_type: values.employmentType,
-              location: values.location,
-              visa_sponsorship: values.visaSponsorship,
-              status: values.status,
-            }
-          : j
-      )
-    );
-    toast.success(`"${values.title}" was updated.`);
+    const jobId = editingJob.id;
     setEditingJob(null);
+    startTransition(async () => {
+      const result = await updateAdminJob(jobId, values);
+      if (result.success) toast.success(result.message);
+      else toast.error(result.message);
+    });
   }
 
   function handleDelete() {
     if (!deletingJob) return;
-    setJobs((prev) => prev.filter((j) => j.id !== deletingJob.id));
-    toast.success(`"${deletingJob.title}" was deleted.`);
+    const jobId = deletingJob.id;
     setDeletingJob(null);
+    startTransition(async () => {
+      const result = await deleteAdminJob(jobId);
+      if (result.success) toast.success(result.message);
+      else toast.error(result.message);
+    });
   }
 
   function handleBulkDelete() {
-    const ids = new Set(selectedRows.map((r) => r.id));
-    setJobs((prev) => prev.filter((j) => !ids.has(j.id)));
-    toast.success(`${ids.size} job(s) deleted.`);
+    const ids = selectedRows.map((r) => r.id);
     setBulkDeleteOpen(false);
+    startTransition(async () => {
+      const result = await bulkDeleteAdminJobs(ids);
+      if (result.success) toast.success(result.message);
+      else toast.error(result.message);
+    });
   }
 
   function handleBulkStatus(status: JobStatus) {
-    const ids = new Set(selectedRows.map((r) => r.id));
-    setJobs((prev) => prev.map((j) => (ids.has(j.id) ? { ...j, status } : j)));
-    toast.success(`${ids.size} job(s) marked as ${status}.`);
+    const ids = selectedRows.map((r) => r.id);
+    startTransition(async () => {
+      const result = await bulkUpdateAdminJobStatus(ids, status);
+      if (result.success) toast.success(result.message);
+      else toast.error(result.message);
+    });
   }
 
   const columns: ColumnDef<JobWithEmployer>[] = [
@@ -165,7 +152,7 @@ export function JobsTable({ initialJobs }: { initialJobs: JobWithEmployer[] }) {
     {
       accessorKey: "status",
       header: "Status",
-      cell: ({ row }) => <Badge className={STATUS_STYLES[row.original.status]}>{row.original.status}</Badge>,
+      cell: ({ row }) => <Badge className={JOB_STATUS_STYLES[row.original.status]}>{row.original.status}</Badge>,
     },
     {
       id: "actions",
@@ -209,7 +196,7 @@ export function JobsTable({ initialJobs }: { initialJobs: JobWithEmployer[] }) {
               <SelectItem value="archived">Mark Archived</SelectItem>
             </SelectContent>
           </Select>
-          <Button variant="destructive" size="sm" className="gap-1.5" onClick={() => setBulkDeleteOpen(true)}>
+          <Button variant="destructive" size="sm" className="gap-1.5" disabled={isPending} onClick={() => setBulkDeleteOpen(true)}>
             <Trash2 className="size-3.5" /> Delete Selected
           </Button>
         </div>
@@ -236,9 +223,10 @@ export function JobsTable({ initialJobs }: { initialJobs: JobWithEmployer[] }) {
               </SelectContent>
             </Select>
             <JobFormDialog
+              employers={employers}
               onSave={handleAdd}
               trigger={
-                <Button size="sm" className="gap-1.5">
+                <Button size="sm" className="gap-1.5" disabled={isPending}>
                   <PlusCircle className="size-4" /> Add New Job
                 </Button>
               }
@@ -247,13 +235,21 @@ export function JobsTable({ initialJobs }: { initialJobs: JobWithEmployer[] }) {
         }
       />
 
-      <JobFormDialog job={editingJob ?? undefined} open={!!editingJob} onOpenChange={(o) => !o && setEditingJob(null)} onSave={handleEdit} />
+      <JobFormDialog
+        job={editingJob ?? undefined}
+        employers={employers}
+        open={!!editingJob}
+        onOpenChange={(o) => !o && setEditingJob(null)}
+        onSave={handleEdit}
+      />
 
       <AlertDialog open={!!deletingJob} onOpenChange={(o) => !o && setDeletingJob(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete &quot;{deletingJob?.title}&quot;?</AlertDialogTitle>
-            <AlertDialogDescription>This will permanently remove this job listing. This action cannot be undone.</AlertDialogDescription>
+            <AlertDialogDescription>
+              This will permanently remove this job listing and any linked applications. This action cannot be undone.
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -266,7 +262,9 @@ export function JobsTable({ initialJobs }: { initialJobs: JobWithEmployer[] }) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete {selectedRows.length} job(s)?</AlertDialogTitle>
-            <AlertDialogDescription>This will permanently remove the selected job listings. This action cannot be undone.</AlertDialogDescription>
+            <AlertDialogDescription>
+              This will permanently remove the selected job listings and any linked applications. This action cannot be undone.
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>

@@ -52,8 +52,12 @@ export function SettingsView() {
                 <Input defaultValue={siteConfig.email} />
               </div>
               <div className="space-y-1.5">
-                <Label>Phone Number</Label>
-                <Input defaultValue={siteConfig.phone.display} />
+                <Label>Primary Phone Number</Label>
+                <Input defaultValue={siteConfig.phones[0].display} />
+              </div>
+              <div className="space-y-1.5">
+                <Label>Secondary Phone Number</Label>
+                <Input defaultValue={siteConfig.phones[1].display} />
               </div>
               <div className="space-y-1.5">
                 <Label>Office Address</Label>

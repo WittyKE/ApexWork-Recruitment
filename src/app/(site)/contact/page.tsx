@@ -8,7 +8,7 @@ import { siteConfig } from "@/lib/env";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with ApexWork Recruitment. Visit us at Ermine Business Park, Huntingdon, or call +44 744 636 4856.",
+    "Get in touch with ApexWork Recruitment. Visit us at Ermine Business Park, Huntingdon, or call +44 744 636 4856 / +44 788 250 2016.",
 };
 
 const mapQuery = encodeURIComponent(siteConfig.address.full);
@@ -46,13 +46,17 @@ export default function ContactPage() {
                   <p className="text-sm text-muted-foreground">{siteConfig.address.full}</p>
                 </div>
               </div>
-              <a href={siteConfig.phone.href} className="flex items-start gap-3 hover:text-primary">
+              <div className="flex items-start gap-3">
                 <Phone className="mt-0.5 size-5 shrink-0 text-primary" />
                 <div>
                   <p className="font-medium">Phone</p>
-                  <p className="text-sm text-muted-foreground">{siteConfig.phone.display}</p>
+                  {siteConfig.phones.map((phone) => (
+                    <a key={phone.href} href={phone.href} className="block text-sm text-muted-foreground hover:text-primary">
+                      {phone.display}
+                    </a>
+                  ))}
                 </div>
-              </a>
+              </div>
               <a href={`mailto:${siteConfig.email}`} className="flex items-start gap-3 hover:text-primary">
                 <Mail className="mt-0.5 size-5 shrink-0 text-primary" />
                 <div>

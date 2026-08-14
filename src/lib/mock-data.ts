@@ -8,9 +8,11 @@ import type {
   Application,
   ApplicationStatus,
   Candidate,
+  ContactMessage,
   Employer,
   Job,
   JobWithEmployer,
+  RightToWorkStatus,
 } from "@/lib/supabase/types";
 
 export const mockEmployers: Employer[] = [
@@ -299,13 +301,25 @@ export const mockCandidates: Candidate[] = [
   },
 ];
 
-export const mockApplications: (Application & { job_title: string; candidate_name: string })[] = [
-  { id: "app-1", job_id: "job-1", candidate_id: "cand-2", status: "shortlisted", cover_note: null, employer_notes: null, applied_at: "2026-07-25T09:00:00Z", updated_at: "2026-07-26T09:00:00Z", job_title: "Live-in Caregiver", candidate_name: "Amara N." },
-  { id: "app-2", job_id: "job-2", candidate_id: "cand-3", status: "interviewing", cover_note: null, employer_notes: null, applied_at: "2026-07-30T09:00:00Z", updated_at: "2026-08-01T09:00:00Z", job_title: "SIA Licensed Security Guard", candidate_name: "Marek K." },
-  { id: "app-3", job_id: "job-4", candidate_id: "cand-1", status: "under_review", cover_note: null, employer_notes: null, applied_at: "2026-08-02T09:00:00Z", updated_at: "2026-08-02T09:00:00Z", job_title: "Senior .NET Engineer", candidate_name: "James O." },
-  { id: "app-4", job_id: "job-5", candidate_id: "cand-2", status: "submitted", cover_note: null, employer_notes: null, applied_at: "2026-08-05T09:00:00Z", updated_at: "2026-08-05T09:00:00Z", job_title: "Registered General Nurse", candidate_name: "Amara N." },
-  { id: "app-5", job_id: "job-3", candidate_id: "cand-3", status: "rejected", cover_note: null, employer_notes: null, applied_at: "2026-07-18T09:00:00Z", updated_at: "2026-07-22T09:00:00Z", job_title: "Estate Gardener", candidate_name: "Marek K." },
-  { id: "app-6", job_id: "job-7", candidate_id: "cand-2", status: "hired", cover_note: null, employer_notes: null, applied_at: "2026-06-20T09:00:00Z", updated_at: "2026-07-01T09:00:00Z", job_title: "Domiciliary Care Assistant", candidate_name: "Amara N." },
+export interface AdminApplicationRow extends Application {
+  job_title: string;
+  employer_company_name: string;
+  candidate_name: string;
+  candidate_email: string;
+  candidate_phone: string | null;
+  cv_url: string | null;
+  cv_filename: string | null;
+  certificate_urls: string[];
+  right_to_work_status: RightToWorkStatus | null;
+}
+
+export const mockApplications: AdminApplicationRow[] = [
+  { id: "app-1", job_id: "job-1", candidate_id: "cand-2", status: "shortlisted", cover_note: "I have 4 years of live-in care experience and am available to start immediately.", employer_notes: null, applied_at: "2026-07-25T09:00:00Z", updated_at: "2026-07-26T09:00:00Z", job_title: "Live-in Caregiver", employer_company_name: "Huntingdon Care Partners", candidate_name: "Amara Nwosu", candidate_email: "amara.nwosu@example.com", candidate_phone: "+44 7700 900123", cv_url: null, cv_filename: null, certificate_urls: [], right_to_work_status: "requires_sponsorship" },
+  { id: "app-2", job_id: "job-2", candidate_id: "cand-3", status: "interviewing", cover_note: "Active SIA Door Supervisor licence, 6 years in manned guarding.", employer_notes: "Strong interview, referencing in progress.", applied_at: "2026-07-30T09:00:00Z", updated_at: "2026-08-01T09:00:00Z", job_title: "SIA Licensed Security Guard", employer_company_name: "Sentinel Guarding Ltd", candidate_name: "Marek Kowalski", candidate_email: "marek.kowalski@example.com", candidate_phone: "+44 7700 900456", cv_url: null, cv_filename: null, certificate_urls: [], right_to_work_status: "uk_citizen" },
+  { id: "app-3", job_id: "job-4", candidate_id: "cand-1", status: "under_review", cover_note: "Attached CV covers 7 years of backend + platform engineering.", employer_notes: null, applied_at: "2026-08-02T09:00:00Z", updated_at: "2026-08-02T09:00:00Z", job_title: "Senior .NET Engineer", employer_company_name: "Northbridge Fintech", candidate_name: "James Okafor", candidate_email: "james.okafor@example.com", candidate_phone: "+44 7700 900789", cv_url: "cand-1/1753000000000-j-osei-cv.pdf", cv_filename: "j-osei-cv.pdf", certificate_urls: [], right_to_work_status: "uk_citizen" },
+  { id: "app-4", job_id: "job-5", candidate_id: "cand-2", status: "submitted", cover_note: null, employer_notes: null, applied_at: "2026-08-05T09:00:00Z", updated_at: "2026-08-05T09:00:00Z", job_title: "Registered General Nurse", employer_company_name: "Ouse Valley NHS Trust Partners", candidate_name: "Amara Nwosu", candidate_email: "amara.nwosu@example.com", candidate_phone: "+44 7700 900123", cv_url: null, cv_filename: null, certificate_urls: [], right_to_work_status: "requires_sponsorship" },
+  { id: "app-5", job_id: "job-3", candidate_id: "cand-3", status: "rejected", cover_note: null, employer_notes: "Role filled internally before interview stage.", applied_at: "2026-07-18T09:00:00Z", updated_at: "2026-07-22T09:00:00Z", job_title: "Estate Gardener", employer_company_name: "Fenland Grounds & Gardens", candidate_name: "Marek Kowalski", candidate_email: "marek.kowalski@example.com", candidate_phone: "+44 7700 900456", cv_url: null, cv_filename: null, certificate_urls: ["cand-3/sia-licence.pdf"], right_to_work_status: "uk_citizen" },
+  { id: "app-6", job_id: "job-7", candidate_id: "cand-2", status: "hired", cover_note: null, employer_notes: "Started 1 July, onboarding complete.", applied_at: "2026-06-20T09:00:00Z", updated_at: "2026-07-01T09:00:00Z", job_title: "Domiciliary Care Assistant", employer_company_name: "Huntingdon Care Partners", candidate_name: "Amara Nwosu", candidate_email: "amara.nwosu@example.com", candidate_phone: "+44 7700 900123", cv_url: null, cv_filename: null, certificate_urls: [], right_to_work_status: "requires_sponsorship" },
 ];
 
 export const applicationStatusColors: Record<ApplicationStatus, string> = {
@@ -317,6 +331,22 @@ export const applicationStatusColors: Record<ApplicationStatus, string> = {
   hired: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
   rejected: "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400",
   withdrawn: "bg-slate-100 text-slate-700 dark:bg-slate-500/15 dark:text-slate-400",
+};
+
+export const mockContactMessages: ContactMessage[] = [
+  { id: "msg-1", name: "Grace Muthoni", email: "grace.muthoni@example.com", phone: "+44 7700 900321", subject: "Question about visa sponsorship", message: "Hi, I'm a registered nurse based in Kenya. Do any of your healthcare roles offer Health & Care Worker visa sponsorship, and what documents would I need to apply?", status: "new", created_at: "2026-08-12T10:15:00Z" },
+  { id: "msg-2", name: "Tom Fletcher", email: "tom.fletcher@sentinelguarding.example", phone: "+44 7700 900654", subject: "Bulk hiring for new contract", message: "We've just won a new site contract in Cambridge and need to hire 12 SIA-licensed security officers within a month. Can someone from your team call me to discuss a bulk placement package?", status: "in_progress", created_at: "2026-08-11T14:40:00Z" },
+  { id: "msg-3", name: "Elena Popescu", email: "elena.popescu@example.com", phone: null, subject: "Unable to upload CV", message: "I tried submitting my CV through the skilled worker application form twice but it keeps failing at the upload step. Could you let me know if there's a file size or format limit?", status: "new", created_at: "2026-08-10T09:05:00Z" },
+  { id: "msg-4", name: "David Lin", email: "david.lin@northbridge.example", phone: "+44 7700 900987", subject: "Employer account verification", message: "We registered an employer account last week for Northbridge Fintech but it still shows as unverified on our postings. What's needed to complete verification?", status: "resolved", created_at: "2026-08-05T11:30:00Z" },
+  { id: "msg-5", name: "Sarah Ibbotson", email: "sarah.ibbotson@example.com", phone: "+44 7700 900222", subject: "General enquiry about essential roles", message: "Do you place gardeners on a seasonal, part-time basis, or only full-time contracts? I'm looking for spring/summer work only.", status: "resolved", created_at: "2026-07-29T16:00:00Z" },
+];
+
+export const mockEmployerContacts: Record<string, { contact_name: string; contact_email: string }> = {
+  "emp-1": { contact_name: "Priya Sharma", contact_email: "priya.sharma@huntingdoncare.example" },
+  "emp-2": { contact_name: "Tom Fletcher", contact_email: "tom.fletcher@sentinelguarding.example" },
+  "emp-3": { contact_name: "Owen Marsh", contact_email: "owen.marsh@fenlandgrounds.example" },
+  "emp-4": { contact_name: "David Lin", contact_email: "david.lin@northbridge.example" },
+  "emp-5": { contact_name: "Helen Ackroyd", contact_email: "helen.ackroyd@ousevalleynhs.example" },
 };
 
 // ---------------------------------------------------------------------------

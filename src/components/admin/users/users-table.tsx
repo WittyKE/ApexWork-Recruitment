@@ -28,7 +28,8 @@ import {
 import { DataTable } from "@/components/admin/data-table";
 import { UserFormDialog } from "@/components/admin/users/user-form-dialog";
 import type { AdminUserRow } from "@/lib/mock-data";
-import type { AdminUserValues } from "@/lib/validations/admin-user";
+import { deleteAdminUser, resetAdminUserPassword } from "@/app/admin/users/actions";
+import { useSyncedState } from "@/lib/hooks/use-synced-state";
 
 const ROLE_STYLES: Record<AdminUserRow["role"], string> = {
   candidate: "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400",
@@ -46,54 +47,42 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-export function UsersTable({ initialUsers }: { initialUsers: AdminUserRow[] }) {
-  const [users, setUsers] = React.useState(initialUsers);
+export function UsersTable({
+  initialUsers,
+  initialCreateEmployer = false,
+}: {
+  initialUsers: AdminUserRow[];
+  initialCreateEmployer?: boolean;
+}) {
+  const [users] = useSyncedState(initialUsers);
   const [roleFilter, setRoleFilter] = React.useState<string>("all");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
   const [editingUser, setEditingUser] = React.useState<AdminUserRow | null>(null);
   const [deletingUser, setDeletingUser] = React.useState<AdminUserRow | null>(null);
+  const [addOpen, setAddOpen] = React.useState(initialCreateEmployer);
+  const [isPending, startTransition] = React.useTransition();
 
   const filtered = users.filter(
     (u) => (roleFilter === "all" || u.role === roleFilter) && (statusFilter === "all" || u.status === statusFilter)
   );
 
-  function handleAdd(values: AdminUserValues) {
-    const newUser: AdminUserRow = {
-      id: `u-${Date.now()}`,
-      full_name: values.fullName,
-      email: values.email,
-      role: values.role,
-      status: values.status,
-      avatar_url: null,
-      last_active: new Date().toISOString(),
-      created_at: new Date().toISOString(),
-    };
-    setUsers((prev) => [newUser, ...prev]);
-    toast.success(`${values.fullName} was added.`);
-  }
-
-  function handleEdit(values: AdminUserValues) {
-    if (!editingUser) return;
-    setUsers((prev) =>
-      prev.map((u) =>
-        u.id === editingUser.id
-          ? { ...u, full_name: values.fullName, email: values.email, role: values.role, status: values.status }
-          : u
-      )
-    );
-    toast.success(`${values.fullName} was updated.`);
-    setEditingUser(null);
-  }
-
   function handleDelete() {
     if (!deletingUser) return;
-    setUsers((prev) => prev.filter((u) => u.id !== deletingUser.id));
-    toast.success(`${deletingUser.full_name} was deleted.`);
+    const userId = deletingUser.id;
     setDeletingUser(null);
+    startTransition(async () => {
+      const result = await deleteAdminUser(userId);
+      if (result.success) toast.success(result.message);
+      else toast.error(result.message);
+    });
   }
 
   function handleResetPassword(user: AdminUserRow) {
-    toast.success(`Password reset link sent to ${user.email}.`);
+    startTransition(async () => {
+      const result = await resetAdminUserPassword(user.id, user.email);
+      if (result.success) toast.success(result.message);
+      else toast.error(result.message);
+    });
   }
 
   const columns: ColumnDef<AdminUserRow>[] = [
@@ -157,7 +146,7 @@ export function UsersTable({ initialUsers }: { initialUsers: AdminUserRow[] }) {
                 <DropdownMenuItem onClick={() => setEditingUser(user)}>
                   <Pencil /> Edit
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleResetPassword(user)}>
+                <DropdownMenuItem disabled={isPending} onClick={() => handleResetPassword(user)}>
                   <KeyRound /> Reset Password
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -204,9 +193,11 @@ export function UsersTable({ initialUsers }: { initialUsers: AdminUserRow[] }) {
               </SelectContent>
             </Select>
             <UserFormDialog
-              onSave={handleAdd}
+              open={addOpen}
+              onOpenChange={setAddOpen}
+              defaultRole={initialCreateEmployer ? "employer" : undefined}
               trigger={
-                <Button size="sm" className="gap-1.5">
+                <Button size="sm" className="gap-1.5" onClick={() => setAddOpen(true)}>
                   <UserPlus className="size-4" /> Add New User
                 </Button>
               }
@@ -215,19 +206,14 @@ export function UsersTable({ initialUsers }: { initialUsers: AdminUserRow[] }) {
         }
       />
 
-      <UserFormDialog
-        user={editingUser ?? undefined}
-        open={!!editingUser}
-        onOpenChange={(open) => !open && setEditingUser(null)}
-        onSave={handleEdit}
-      />
+      <UserFormDialog user={editingUser ?? undefined} open={!!editingUser} onOpenChange={(open) => !open && setEditingUser(null)} />
 
       <AlertDialog open={!!deletingUser} onOpenChange={(open) => !open && setDeletingUser(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete {deletingUser?.full_name}?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently remove this user account. This action cannot be undone.
+              This permanently deletes their Supabase Auth account and profile. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -33,9 +33,9 @@ export const siteConfig = {
     country: "United Kingdom",
     full: "Unit B, Sovereign Court, Ermine Business Park, Huntingdon, PE29 6XU, United Kingdom",
   },
-  phone: {
-    display: "+44 744 636 4856",
-    href: "tel:+447446364856",
-  },
+  phones: [
+    { display: "+44 744 636 4856", href: "tel:+447446364856" },
+    { display: "+44 788 250 2016", href: "tel:+447882502016" },
+  ],
   email: "info@apexworkrecruitment.co.uk",
 } as const;

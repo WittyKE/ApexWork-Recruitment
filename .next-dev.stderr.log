@@ -1,18 +1,116 @@
 [browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[browser] Image with src "/images/logo.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
 [browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+⨯ TypeError: Cannot read properties of undefined (reading 'href')
+    at SiteFooter (src\components\layout\site-footer.tsx:48:41)
+  46 |                 <span>{siteConfig.address.full}</span>
+  47 |               </div>
+> 48 |               <a href={siteConfig.phone.href} className="flex items-center gap-2.5 hover:text-white">
+     |                                         ^
+  49 |                 <Phone className="size-4 shrink-0 text-primary" />
+  50 |                 {siteConfig.phone.display}
+  51 |               </a> {
+  digest: '134762685'
+}
+⨯ TypeError: Cannot read properties of undefined (reading 'href')
+    at ContactPage (src\app\(site)\contact\page.tsx:49:41)
+  47 |                 </div>
+  48 |               </div>
+> 49 |               <a href={siteConfig.phone.href} className="flex items-start gap-3 hover:text-primary">
+     |                                         ^
+  50 |                 <Phone className="mt-0.5 size-5 shrink-0 text-primary" />
+  51 |                 <div>
+  52 |                   <p className="font-medium">Phone</p> {
+  digest: '1166040056'
+}
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⨯ TypeError: Cannot read properties of undefined (reading 'href')
+    at SiteFooter (src\components\layout\site-footer.tsx:48:41)
+  46 |                 <span>{siteConfig.address.full}</span>
+  47 |               </div>
+> 48 |               <a href={siteConfig.phone.href} className="flex items-center gap-2.5 hover:text-white">
+     |                                         ^
+  49 |                 <Phone className="size-4 shrink-0 text-primary" />
+  50 |                 {siteConfig.phone.display}
+  51 |               </a> {
+  digest: '134762685'
+}
+⨯ TypeError: Cannot read properties of undefined (reading 'href')
+    at ContactPage (src\app\(site)\contact\page.tsx:49:41)
+  47 |                 </div>
+  48 |               </div>
+> 49 |               <a href={siteConfig.phone.href} className="flex items-start gap-3 hover:text-primary">
+     |                                         ^
+  50 |                 <Phone className="mt-0.5 size-5 shrink-0 text-primary" />
+  51 |                 <div>
+  52 |                   <p className="font-medium">Phone</p> {
+  digest: '1166040056'
+}
+⨯ TypeError: Cannot read properties of undefined (reading 'href')
+    at SiteHeader (src\components\layout\site-header.tsx:98:40)
+   96 |               ))}
+   97 |               <a
+>  98 |                 href={siteConfig.phone.href}
+      |                                        ^
+   99 |                 className="flex items-center gap-2 rounded-md px-3 py-2.5 text-base font-medium text-muted-foreground hover:bg-accent"
+  100 |               >
+  101 |                 <Phone className="size-4" /> {
+  digest: '2892015690'
+}
+⨯ TypeError: Cannot read properties of undefined (reading 'href')
+    at SiteFooter (src\components\layout\site-footer.tsx:48:41)
+  46 |                 <span>{siteConfig.address.full}</span>
+  47 |               </div>
+> 48 |               <a href={siteConfig.phone.href} className="flex items-center gap-2.5 hover:text-white">
+     |                                         ^
+  49 |                 <Phone className="size-4 shrink-0 text-primary" />
+  50 |                 {siteConfig.phone.display}
+  51 |               </a> {
+  digest: '134762685'
+}
+⨯ TypeError: Cannot read properties of undefined (reading 'href')
+    at ContactPage (src\app\(site)\contact\page.tsx:49:41)
+  47 |                 </div>
+  48 |               </div>
+> 49 |               <a href={siteConfig.phone.href} className="flex items-start gap-3 hover:text-primary">
+     |                                         ^
+  50 |                 <Phone className="mt-0.5 size-5 shrink-0 text-primary" />
+  51 |                 <div>
+  52 |                   <p className="font-medium">Phone</p> {
+  digest: '1166040056'
+}
+⨯ TypeError: Cannot read properties of undefined (reading 'href')
+    at ContactPage (src\app\(site)\contact\page.tsx:49:41)
+  47 |                 </div>
+  48 |               </div>
+> 49 |               <a href={siteConfig.phone.href} className="flex items-start gap-3 hover:text-primary">
+     |                                         ^
+  50 |                 <Phone className="mt-0.5 size-5 shrink-0 text-primary" />
+  51 |                 <div>
+  52 |                   <p className="font-medium">Phone</p> {
+  digest: '1166040056'
+}
+⨯ TypeError: Cannot read properties of undefined (reading 'href')
+    at ContactPage (src\app\(site)\contact\page.tsx:49:41)
+  47 |                 </div>
+  48 |               </div>
+> 49 |               <a href={siteConfig.phone.href} className="flex items-start gap-3 hover:text-primary">
+     |                                         ^
+  50 |                 <Phone className="mt-0.5 size-5 shrink-0 text-primary" />
+  51 |                 <div>
+  52 |                   <p className="font-medium">Phone</p> {
+  digest: '245252320'
+}
 [browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[browser] Image with src "/images/office-location.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[browser] Image with src "/images/office-location.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
 [browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
 ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[browser] Image with src "/images/office-location.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
 [browser] Image with src "/images/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
 [browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior

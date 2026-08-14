@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +20,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { adminJobSchema, type AdminJobValues } from "@/lib/validations/admin-job";
 import { EMPLOYMENT_TYPE_LABELS, JOB_CATEGORY_LABELS, type JobWithEmployer } from "@/lib/supabase/types";
+import type { EmployerOption } from "@/lib/data/admin/jobs";
 
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
@@ -34,19 +36,29 @@ function toDefaults(job?: JobWithEmployer): AdminJobValues {
   if (!job) {
     return {
       title: "",
+      employerId: "",
       category: "healthcare_caregiving",
       employmentType: "full_time",
       location: "",
+      isRemote: false,
       visaSponsorship: false,
+      description: "",
+      requirements: "",
+      benefits: "",
       status: "draft",
     };
   }
   return {
     title: job.title,
+    employerId: job.employer.id,
     category: job.category,
     employmentType: job.employment_type,
     location: job.location,
+    isRemote: job.is_remote,
     visaSponsorship: job.visa_sponsorship,
+    description: job.description,
+    requirements: job.requirements ?? "",
+    benefits: job.benefits ?? "",
     status: job.status,
   };
 }
@@ -54,12 +66,14 @@ function toDefaults(job?: JobWithEmployer): AdminJobValues {
 export function JobFormDialog({
   trigger,
   job,
+  employers,
   onSave,
   open: openProp,
   onOpenChange,
 }: {
   trigger?: React.ReactElement;
   job?: JobWithEmployer;
+  employers: EmployerOption[];
   onSave: (values: AdminJobValues) => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -95,16 +109,31 @@ export function JobFormDialog({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       {trigger && <DialogTrigger render={trigger} />}
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{job ? "Edit Job" : "Add New Job"}</DialogTitle>
           <DialogDescription>
             {job ? "Update this job listing." : "Create a new job listing on the platform."}
           </DialogDescription>
         </DialogHeader>
-        <form id={formId} onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form id={formId} onSubmit={handleSubmit(onSubmit)} className="max-h-[65vh] space-y-4 overflow-y-auto pr-1">
           <Field label="Job Title" error={errors.title?.message}>
             <Input {...register("title")} placeholder="e.g. Live-in Caregiver" />
+          </Field>
+          <Field label="Employer" error={errors.employerId?.message}>
+            <Select value={values.employerId} onValueChange={(v) => setValue("employerId", v ?? "", { shouldValidate: true })}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select an employer" />
+              </SelectTrigger>
+              <SelectContent>
+                {employers.map((employer) => (
+                  <SelectItem key={employer.id} value={employer.id}>
+                    {employer.company_name}
+                    {!employer.is_verified && " (unverified)"}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </Field>
           <div className="grid grid-cols-2 gap-4">
             <Field label="Category" error={errors.category?.message}>
@@ -142,6 +171,15 @@ export function JobFormDialog({
           <Field label="Location" error={errors.location?.message}>
             <Input {...register("location")} placeholder="e.g. Huntingdon, UK" />
           </Field>
+          <Field label="Description" error={errors.description?.message}>
+            <Textarea {...register("description")} rows={4} placeholder="Describe the role, responsibilities and setting..." />
+          </Field>
+          <Field label="Requirements" error={errors.requirements?.message}>
+            <Textarea {...register("requirements")} rows={3} placeholder="List the key requirements..." />
+          </Field>
+          <Field label="Benefits (optional)" error={errors.benefits?.message}>
+            <Textarea {...register("benefits")} rows={2} placeholder="e.g. Visa sponsorship, paid training..." />
+          </Field>
           <div className="grid grid-cols-2 gap-4">
             <Field label="Status" error={errors.status?.message}>
               <Select value={values.status} onValueChange={(v) => setValue("status", v as AdminJobValues["status"], { shouldValidate: true })}>
@@ -156,9 +194,15 @@ export function JobFormDialog({
                 </SelectContent>
               </Select>
             </Field>
-            <div className="flex items-end gap-2.5 pb-2">
-              <Switch checked={values.visaSponsorship} onCheckedChange={(c) => setValue("visaSponsorship", c)} />
-              <Label className="font-normal">Visa Sponsorship</Label>
+            <div className="flex flex-col justify-end gap-3 pb-2">
+              <div className="flex items-center gap-2.5">
+                <Switch checked={values.isRemote} onCheckedChange={(c) => setValue("isRemote", c)} />
+                <Label className="font-normal">Remote</Label>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Switch checked={values.visaSponsorship} onCheckedChange={(c) => setValue("visaSponsorship", c)} />
+                <Label className="font-normal">Visa Sponsorship</Label>
+              </div>
             </div>
           </div>
         </form>

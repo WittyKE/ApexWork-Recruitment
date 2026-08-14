@@ -63,7 +63,7 @@ export default function PrivacyPolicyPage() {
         <p>
           ApexWork Recruitment, {siteConfig.address.full}
           <br />
-          Phone: {siteConfig.phone.display}
+          Phone: {siteConfig.phones.map((phone) => phone.display).join(" / ")}
           <br />
           Email: {siteConfig.email}
         </p>

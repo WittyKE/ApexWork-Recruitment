@@ -119,10 +119,16 @@ export default function AboutPage() {
                   <MapPin className="mt-0.5 size-4 shrink-0" />
                   {siteConfig.address.full}
                 </p>
-                <a href={siteConfig.phone.href} className="flex items-center gap-2.5 transition-colors hover:text-primary">
-                  <Phone className="size-4 shrink-0" />
-                  {siteConfig.phone.display}
-                </a>
+                {siteConfig.phones.map((phone) => (
+                  <a
+                    key={phone.href}
+                    href={phone.href}
+                    className="flex items-center gap-2.5 transition-colors hover:text-primary"
+                  >
+                    <Phone className="size-4 shrink-0" />
+                    {phone.display}
+                  </a>
+                ))}
               </div>
               <div className="group relative mt-6 aspect-video overflow-hidden rounded-lg">
                 <Image
