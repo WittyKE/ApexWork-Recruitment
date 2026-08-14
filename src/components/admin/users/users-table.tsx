@@ -36,6 +36,15 @@ const ROLE_STYLES: Record<AdminUserRow["role"], string> = {
   employer: "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-400",
   admin: "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400",
   manager: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
+  super_admin: "bg-slate-900 text-white dark:bg-white dark:text-slate-900",
+};
+
+const ROLE_LABELS: Record<AdminUserRow["role"], string> = {
+  candidate: "candidate",
+  employer: "employer",
+  admin: "admin",
+  manager: "manager",
+  super_admin: "Super Admin",
 };
 
 function initials(name: string) {
@@ -47,12 +56,16 @@ function initials(name: string) {
     .toUpperCase();
 }
 
+const STAFF_ROLES = new Set<AdminUserRow["role"]>(["admin", "manager", "super_admin"]);
+
 export function UsersTable({
   initialUsers,
   initialCreateEmployer = false,
+  isSuperAdmin = false,
 }: {
   initialUsers: AdminUserRow[];
   initialCreateEmployer?: boolean;
+  isSuperAdmin?: boolean;
 }) {
   const [users] = useSyncedState(initialUsers);
   const [roleFilter, setRoleFilter] = React.useState<string>("all");
@@ -108,7 +121,7 @@ export function UsersTable({
     {
       accessorKey: "role",
       header: "Role",
-      cell: ({ row }) => <Badge className={ROLE_STYLES[row.original.role]}>{row.original.role}</Badge>,
+      cell: ({ row }) => <Badge className={ROLE_STYLES[row.original.role]}>{ROLE_LABELS[row.original.role]}</Badge>,
     },
     {
       accessorKey: "status",
@@ -136,6 +149,7 @@ export function UsersTable({
       id: "actions",
       cell: ({ row }) => {
         const user = row.original;
+        const locked = STAFF_ROLES.has(user.role) && !isSuperAdmin;
         return (
           <div className="flex justify-end">
             <DropdownMenu>
@@ -143,14 +157,14 @@ export function UsersTable({
                 <MoreHorizontal className="size-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setEditingUser(user)}>
+                <DropdownMenuItem disabled={locked} onClick={() => setEditingUser(user)}>
                   <Pencil /> Edit
                 </DropdownMenuItem>
-                <DropdownMenuItem disabled={isPending} onClick={() => handleResetPassword(user)}>
+                <DropdownMenuItem disabled={isPending || locked} onClick={() => handleResetPassword(user)}>
                   <KeyRound /> Reset Password
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive" onClick={() => setDeletingUser(user)}>
+                <DropdownMenuItem variant="destructive" disabled={locked} onClick={() => setDeletingUser(user)}>
                   <Trash2 /> Delete
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -180,6 +194,7 @@ export function UsersTable({
                 <SelectItem value="employer">Employer</SelectItem>
                 <SelectItem value="manager">Manager</SelectItem>
                 <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="super_admin">Super Admin</SelectItem>
               </SelectContent>
             </Select>
             <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v ?? "all")}>
@@ -196,6 +211,7 @@ export function UsersTable({
               open={addOpen}
               onOpenChange={setAddOpen}
               defaultRole={initialCreateEmployer ? "employer" : undefined}
+              isSuperAdmin={isSuperAdmin}
               trigger={
                 <Button size="sm" className="gap-1.5" onClick={() => setAddOpen(true)}>
                   <UserPlus className="size-4" /> Add New User
@@ -206,7 +222,12 @@ export function UsersTable({
         }
       />
 
-      <UserFormDialog user={editingUser ?? undefined} open={!!editingUser} onOpenChange={(open) => !open && setEditingUser(null)} />
+      <UserFormDialog
+        user={editingUser ?? undefined}
+        open={!!editingUser}
+        onOpenChange={(open) => !open && setEditingUser(null)}
+        isSuperAdmin={isSuperAdmin}
+      />
 
       <AlertDialog open={!!deletingUser} onOpenChange={(open) => !open && setDeletingUser(null)}>
         <AlertDialogContent>

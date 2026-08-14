@@ -2,7 +2,7 @@
 // Regenerate with `supabase gen types typescript` once the project is linked
 // for a fully generated Database type — these are kept in sync manually.
 
-export type AppRole = "candidate" | "employer" | "admin" | "manager";
+export type AppRole = "candidate" | "employer" | "admin" | "manager" | "super_admin";
 
 export type CandidateType = "skilled" | "essential";
 

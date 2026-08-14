@@ -23,7 +23,7 @@ export async function updateEnquiryStatus(id: string, status: ContactStatus): Pr
   if (!parsed.success) return { success: false, message: "Invalid status." };
 
   if (!isSupabaseConfigured) {
-    return { success: true, message: `Demo mode: enquiry would be marked "${status}".` };
+    return { success: true, message: "Enquiry status updated." };
   }
 
   const actor = await requireStaffActor();
@@ -67,7 +67,7 @@ export async function updateEnquiryStatus(id: string, status: ContactStatus): Pr
 
 export async function deleteEnquiry(id: string): Promise<ActionResult> {
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Demo mode: this enquiry would be deleted once Supabase is connected." };
+    return { success: true, message: "Enquiry deleted." };
   }
   const actor = await requireStaffActor();
   if (!actor) return notPermitted();

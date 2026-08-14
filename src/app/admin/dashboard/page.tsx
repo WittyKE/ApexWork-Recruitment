@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Briefcase, ClipboardList, PlusCircle, TrendingUp, UserPlus, Users } from "lucide-react";
+import { Briefcase, ClipboardList, FileText, PlusCircle, UserPlus, Users } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { KpiCard } from "@/components/admin/kpi-card";
-import { RevenueAreaChart } from "@/components/admin/revenue-area-chart";
+import { ApplicationsTrendChart } from "@/components/admin/applications-trend-chart";
 import { UserGrowthChart } from "@/components/admin/user-growth-chart";
 import { CategoryBarChart } from "@/components/admin/category-bar-chart";
 import { getAuditLogs, getDashboardStats } from "@/lib/data/admin";
@@ -41,14 +41,14 @@ export default async function AdminDashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <KpiCard label="Total Revenue" value={stats.kpis.totalRevenue.value} change={stats.kpis.totalRevenue.change} icon={TrendingUp} format="currency" />
+        <KpiCard label="Total Jobs Applied" value={stats.counts.totalApplications} change={stats.kpis.jobsApplied.change} icon={FileText} />
         <KpiCard label="Active Users" value={stats.counts.totalUsers} change={stats.kpis.activeUsers.change} icon={Users} />
         <KpiCard label="Conversions (Hires)" value={stats.counts.hired} change={stats.kpis.conversions.change} icon={ClipboardList} />
         <KpiCard label="Bounce Rate" value={stats.kpis.bounceRate.value} change={stats.kpis.bounceRate.change} icon={Briefcase} format="percent" />
       </div>
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-        <RevenueAreaChart data={stats.revenueTrend} />
+        <ApplicationsTrendChart data={stats.applicationsTrend} />
         <UserGrowthChart data={stats.userGrowthTrend} />
       </div>
 

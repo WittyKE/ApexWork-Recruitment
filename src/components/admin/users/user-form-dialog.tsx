@@ -56,6 +56,7 @@ export function UserFormDialog({
   open: openProp,
   onOpenChange,
   onSaved,
+  isSuperAdmin = false,
 }: {
   trigger?: React.ReactElement;
   user?: AdminUserRow;
@@ -63,6 +64,7 @@ export function UserFormDialog({
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   onSaved?: () => void;
+  isSuperAdmin?: boolean;
 }) {
   const [internalOpen, setInternalOpen] = React.useState(false);
   const isControlled = openProp !== undefined;
@@ -181,8 +183,13 @@ export function UserFormDialog({
                     <SelectContent>
                       <SelectItem value="candidate">Candidate</SelectItem>
                       <SelectItem value="employer">Employer</SelectItem>
-                      <SelectItem value="manager">Manager</SelectItem>
-                      <SelectItem value="admin">Admin</SelectItem>
+                      {isSuperAdmin && (
+                        <>
+                          <SelectItem value="manager">Manager</SelectItem>
+                          <SelectItem value="admin">Admin</SelectItem>
+                          <SelectItem value="super_admin">Super Admin</SelectItem>
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
                 </Field>
@@ -238,8 +245,13 @@ export function UserFormDialog({
                     <SelectContent>
                       <SelectItem value="candidate">Candidate</SelectItem>
                       <SelectItem value="employer">Employer</SelectItem>
-                      <SelectItem value="manager">Manager</SelectItem>
-                      <SelectItem value="admin">Admin</SelectItem>
+                      {isSuperAdmin && (
+                        <>
+                          <SelectItem value="manager">Manager</SelectItem>
+                          <SelectItem value="admin">Admin</SelectItem>
+                          <SelectItem value="super_admin">Super Admin</SelectItem>
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
                 </Field>

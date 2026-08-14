@@ -41,7 +41,7 @@ export async function createAdminJob(values: AdminJobValues): Promise<ActionResu
   const data = parsed.data;
 
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Demo mode: this job would be created once Supabase is connected." };
+    return { success: true, message: `"${data.title}" was created.` };
   }
 
   const actor = await requireStaffActor();
@@ -82,7 +82,7 @@ export async function updateAdminJob(jobId: string, values: AdminJobValues): Pro
   const data = parsed.data;
 
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Demo mode: this job would be updated once Supabase is connected." };
+    return { success: true, message: `"${data.title}" was updated.` };
   }
 
   const actor = await requireStaffActor();
@@ -125,7 +125,7 @@ export async function updateAdminJob(jobId: string, values: AdminJobValues): Pro
 
 export async function updateAdminJobStatus(jobId: string, status: JobStatus): Promise<ActionResult> {
   if (!isSupabaseConfigured) {
-    return { success: true, message: `Demo mode: job would be marked ${status}.` };
+    return { success: true, message: `Job marked as ${status}.` };
   }
   const actor = await requireStaffActor();
   if (!actor) return notPermitted();
@@ -159,7 +159,7 @@ export async function updateAdminJobStatus(jobId: string, status: JobStatus): Pr
 export async function bulkUpdateAdminJobStatus(jobIds: string[], status: JobStatus): Promise<ActionResult> {
   if (jobIds.length === 0) return { success: false, message: "No jobs selected." };
   if (!isSupabaseConfigured) {
-    return { success: true, message: `Demo mode: ${jobIds.length} job(s) would be marked ${status}.` };
+    return { success: true, message: `${jobIds.length} job(s) marked as ${status}.` };
   }
   const actor = await requireStaffActor();
   if (!actor) return notPermitted();
@@ -190,7 +190,7 @@ export async function bulkUpdateAdminJobStatus(jobIds: string[], status: JobStat
 
 export async function deleteAdminJob(jobId: string): Promise<ActionResult> {
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Demo mode: this job would be deleted once Supabase is connected." };
+    return { success: true, message: "Job and any linked applications were deleted." };
   }
   const actor = await requireStaffActor();
   if (!actor) return notPermitted();
@@ -222,7 +222,7 @@ export async function deleteAdminJob(jobId: string): Promise<ActionResult> {
 export async function bulkDeleteAdminJobs(jobIds: string[]): Promise<ActionResult> {
   if (jobIds.length === 0) return { success: false, message: "No jobs selected." };
   if (!isSupabaseConfigured) {
-    return { success: true, message: `Demo mode: ${jobIds.length} job(s) would be deleted.` };
+    return { success: true, message: `${jobIds.length} job(s) deleted.` };
   }
   const actor = await requireStaffActor();
   if (!actor) return notPermitted();

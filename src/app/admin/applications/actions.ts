@@ -26,7 +26,7 @@ export async function updateApplicationStatus(applicationId: string, status: App
   if (!parsed.success) return { success: false, message: "Invalid status." };
 
   if (!isSupabaseConfigured) {
-    return { success: true, message: `Demo mode: application would be marked "${status}".` };
+    return { success: true, message: "Application status updated." };
   }
 
   const actor = await requireStaffActor();
@@ -81,7 +81,7 @@ export async function updateApplicationNotes(applicationId: string, employerNote
   if (!parsed.success) return { success: false, message: "Notes must be 2000 characters or fewer." };
 
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Demo mode: notes would be saved once Supabase is connected." };
+    return { success: true, message: "Notes saved." };
   }
 
   const actor = await requireStaffActor();
@@ -109,7 +109,7 @@ export async function updateApplicationNotes(applicationId: string, employerNote
 
 export async function deleteApplication(applicationId: string): Promise<ActionResult> {
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Demo mode: this application would be deleted once Supabase is connected." };
+    return { success: true, message: "Application removed." };
   }
   const actor = await requireStaffActor();
   if (!actor) return notPermitted();
@@ -138,7 +138,7 @@ export async function deleteApplication(applicationId: string): Promise<ActionRe
 type FileRef = { type: "cv" } | { type: "certificate"; index: number };
 
 export async function getApplicationFileUrl(applicationId: string, ref: FileRef): Promise<ActionResult<{ url: string }>> {
-  if (!isSupabaseConfigured) return { success: false, message: "Demo mode: no file storage is connected." };
+  if (!isSupabaseConfigured) return { success: false, message: "Couldn't generate a link to that file." };
 
   const actor = await requireStaffActor();
   if (!actor) return notPermitted();

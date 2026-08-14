@@ -3,7 +3,7 @@ import { z } from "zod";
 export const adminUserSchema = z.object({
   fullName: z.string().trim().min(2, "Enter a full name"),
   email: z.string().trim().email("Enter a valid email address"),
-  role: z.enum(["candidate", "employer", "admin", "manager"]),
+  role: z.enum(["candidate", "employer", "admin", "manager", "super_admin"]),
   status: z.enum(["active", "inactive"]),
 });
 
@@ -14,7 +14,7 @@ export const adminCreateUserSchema = z
     fullName: z.string().trim().min(2, "Enter a full name"),
     email: z.string().trim().email("Enter a valid email address"),
     phone: z.string().trim().optional().or(z.literal("")),
-    role: z.enum(["candidate", "employer", "admin", "manager"]),
+    role: z.enum(["candidate", "employer", "admin", "manager", "super_admin"]),
     status: z.enum(["active", "inactive"]),
     passwordMode: z.enum(["generate", "set", "invite"]),
     password: z.string().min(8, "Password must be at least 8 characters").optional().or(z.literal("")),

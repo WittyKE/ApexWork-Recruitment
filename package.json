@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "create-super-admin": "node --env-file=.env.local scripts/create-super-admin.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

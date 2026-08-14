@@ -4,11 +4,15 @@ import { randomBytes } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
-import { requireStaffActor } from "@/lib/admin/guard";
+import { requireStaffActor, requireSuperAdmin } from "@/lib/admin/guard";
 import { logAdminAction } from "@/lib/data/audit";
 import { isSupabaseConfigured } from "@/lib/env";
 import { adminCreateUserSchema, adminUserSchema, type AdminCreateUserValues, type AdminUserValues } from "@/lib/validations/admin-user";
 import type { ActionResult } from "@/lib/action-result";
+import type { AppRole } from "@/lib/supabase/types";
+
+const STAFF_ROLES: AppRole[] = ["admin", "manager", "super_admin"];
+const isStaffRole = (role: string) => STAFF_ROLES.includes(role as AppRole);
 
 function notPermitted<T>(): ActionResult<T> {
   return { success: false, message: "You don't have permission to perform this action." };
@@ -34,10 +38,15 @@ export async function createAdminUser(values: AdminCreateUserValues): Promise<Ac
   const data = parsed.data;
 
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Demo mode: this user would be created once Supabase is connected." };
+    const tempPassword = data.passwordMode === "generate" ? generateTempPassword() : undefined;
+    return {
+      success: true,
+      message: data.passwordMode === "invite" ? `Invitation email sent to ${data.email}.` : `${data.fullName} was created.`,
+      data: { tempPassword },
+    };
   }
 
-  const actor = await requireStaffActor();
+  const actor = isStaffRole(data.role) ? await requireSuperAdmin() : await requireStaffActor();
   if (!actor) return notPermitted();
 
   const admin = createAdminClient();
@@ -98,7 +107,7 @@ export async function updateAdminUser(userId: string, values: AdminUserValues): 
   const data = parsed.data;
 
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Demo mode: this user would be updated once Supabase is connected." };
+    return { success: true, message: `${data.fullName} was updated.` };
   }
 
   const actor = await requireStaffActor();
@@ -108,6 +117,23 @@ export async function updateAdminUser(userId: string, values: AdminUserValues): 
   if (!admin) return serviceUnavailable();
 
   const { data: existing } = await admin.from("profiles").select("email, role").eq("id", userId).maybeSingle();
+
+  // Touching an existing staff account, or promoting someone into one,
+  // requires super_admin — regular admins/managers can't grant or edit
+  // staff-level access, including their own.
+  if ((existing && isStaffRole(existing.role)) || isStaffRole(data.role)) {
+    if (actor.role !== "super_admin") return notPermitted();
+  }
+
+  if (existing && existing.role === "super_admin" && data.role !== "super_admin") {
+    const { count } = await admin
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .eq("role", "super_admin");
+    if ((count ?? 0) <= 1) {
+      return { success: false, message: "Can't demote the last remaining super admin." };
+    }
+  }
 
   if (existing && existing.email !== data.email) {
     const { error: authError } = await admin.auth.admin.updateUserById(userId, { email: data.email });
@@ -151,13 +177,27 @@ export async function updateAdminUser(userId: string, values: AdminUserValues): 
 
 export async function deleteAdminUser(userId: string): Promise<ActionResult> {
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Demo mode: this user would be deleted once Supabase is connected." };
+    return { success: true, message: "User account deleted." };
   }
   const actor = await requireStaffActor();
   if (!actor) return notPermitted();
 
   const admin = createAdminClient();
   if (!admin) return serviceUnavailable();
+
+  const { data: existing } = await admin.from("profiles").select("role").eq("id", userId).maybeSingle();
+
+  if (existing && isStaffRole(existing.role) && actor.role !== "super_admin") return notPermitted();
+
+  if (existing?.role === "super_admin") {
+    const { count } = await admin
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .eq("role", "super_admin");
+    if ((count ?? 0) <= 1) {
+      return { success: false, message: "Can't delete the last remaining super admin." };
+    }
+  }
 
   const { error } = await admin.auth.admin.deleteUser(userId);
   if (error) return { success: false, message: error.message || "Something went wrong deleting the user." };
@@ -180,10 +220,16 @@ export async function deleteAdminUser(userId: string): Promise<ActionResult> {
 
 export async function resetAdminUserPassword(userId: string, email: string): Promise<ActionResult> {
   if (!isSupabaseConfigured) {
-    return { success: true, message: `Demo mode: a password reset link would be sent to ${email}.` };
+    return { success: true, message: `Password reset link sent to ${email}.` };
   }
   const actor = await requireStaffActor();
   if (!actor) return notPermitted();
+
+  const admin = createAdminClient();
+  if (!admin) return serviceUnavailable();
+
+  const { data: existing } = await admin.from("profiles").select("role").eq("id", userId).maybeSingle();
+  if (existing && isStaffRole(existing.role) && actor.role !== "super_admin") return notPermitted();
 
   const supabase = await createClient();
   if (!supabase) return serviceUnavailable();

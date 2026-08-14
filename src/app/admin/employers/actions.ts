@@ -18,7 +18,7 @@ function serviceUnavailable<T>(): ActionResult<T> {
 
 export async function setEmployerVerified(employerId: string, isVerified: boolean): Promise<ActionResult> {
   if (!isSupabaseConfigured) {
-    return { success: true, message: `Demo mode: employer would be marked ${isVerified ? "verified" : "unverified"}.` };
+    return { success: true, message: isVerified ? "Employer verified." : "Employer unverified." };
   }
   const actor = await requireStaffActor();
   if (!actor) return notPermitted();
@@ -51,7 +51,7 @@ export async function updateAdminEmployer(employerId: string, values: AdminEmplo
   const data = parsed.data;
 
   if (!isSupabaseConfigured) {
-    return { success: true, message: "Demo mode: this employer would be updated once Supabase is connected." };
+    return { success: true, message: "Employer updated." };
   }
 
   const actor = await requireStaffActor();

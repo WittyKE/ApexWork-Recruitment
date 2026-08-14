@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { mockAuditLogs } from "@/lib/mock-data";
+import { signOut } from "@/app/login/actions";
 
 export function AdminHeader() {
   const { theme, setTheme } = useTheme();
@@ -104,8 +105,9 @@ export function AdminHeader() {
               <Settings /> Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem render={<Link href="/" />} variant="destructive">
-              <LogOut /> Exit to Site
+            <DropdownMenuItem render={<Link href="/" />}>Exit to Site</DropdownMenuItem>
+            <DropdownMenuItem variant="destructive" onClick={() => signOut()}>
+              <LogOut /> Log Out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { UsersTable } from "@/components/admin/users/users-table";
 import { getAdminUsers } from "@/lib/data/admin";
+import { requireStaffActor } from "@/lib/admin/guard";
 
 export const metadata: Metadata = { title: "Users" };
 
@@ -9,7 +10,7 @@ export default async function AdminUsersPage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const [users, params] = await Promise.all([getAdminUsers(), searchParams]);
+  const [users, params, actor] = await Promise.all([getAdminUsers(), searchParams, requireStaffActor()]);
   const createEmployer = params.create === "employer";
 
   return (
@@ -18,7 +19,7 @@ export default async function AdminUsersPage({
         <h1 className="text-2xl font-bold tracking-tight">User Management</h1>
         <p className="text-sm text-muted-foreground">Manage candidates, employers and staff accounts.</p>
       </div>
-      <UsersTable initialUsers={users} initialCreateEmployer={createEmployer} />
+      <UsersTable initialUsers={users} initialCreateEmployer={createEmployer} isSuperAdmin={actor?.role === "super_admin"} />
     </div>
   );
 }

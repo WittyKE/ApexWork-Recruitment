@@ -597,7 +597,7 @@ export interface AdminUserRow {
   id: string;
   full_name: string;
   email: string;
-  role: "candidate" | "employer" | "admin" | "manager";
+  role: "candidate" | "employer" | "admin" | "manager" | "super_admin";
   status: "active" | "inactive";
   avatar_url: string | null;
   last_active: string;
@@ -638,16 +638,6 @@ export const mockAuditLogs: AdminAuditLogRow[] = [
   { id: "log-8", actor: "system", action: "api.rate_limited", entity_type: "api", severity: "error", created_at: "2026-08-07T22:14:00Z", details: "Rate limit hit on /api/jobs/search from 203.0.113.44" },
 ];
 
-export const revenueTrend = [
-  { month: "Feb", placements: 14, revenue: 42000 },
-  { month: "Mar", placements: 18, revenue: 54000 },
-  { month: "Apr", placements: 22, revenue: 66000 },
-  { month: "May", placements: 19, revenue: 57000 },
-  { month: "Jun", placements: 27, revenue: 81000 },
-  { month: "Jul", placements: 31, revenue: 93000 },
-  { month: "Aug", placements: 24, revenue: 72000 },
-];
-
 export const userGrowthTrend = [
   { month: "Feb", candidates: 120, employers: 8 },
   { month: "Mar", candidates: 165, employers: 11 },
@@ -668,7 +658,7 @@ export const jobsByCategory = [
 ];
 
 export const adminKpis = {
-  totalRevenue: { value: 465000, change: 12.4 },
+  jobsApplied: { value: 146, change: 12.4 },
   activeUsers: { value: 501, change: 8.9 },
   conversions: { value: 146, change: 5.2 },
   bounceRate: { value: 34.1, change: -3.6 },
