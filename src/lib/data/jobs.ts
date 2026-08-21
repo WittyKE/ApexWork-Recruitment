@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/env";
 import { mockJobsWithEmployer } from "@/lib/mock-data";
-import type { EmploymentType, JobCategory, JobWithEmployer } from "@/lib/supabase/types";
+import { JOB_CATEGORY_LABELS, type EmploymentType, type JobCategory, type JobWithEmployer } from "@/lib/supabase/types";
 
 export interface JobFilters {
   keyword?: string;
@@ -109,9 +109,19 @@ export async function searchJobs(filters: JobFilters = {}): Promise<JobSearchRes
   return { jobs: data as unknown as JobWithEmployer[], total: count ?? data.length };
 }
 
-export async function getFeaturedJobs(limit = 6): Promise<JobWithEmployer[]> {
-  const { jobs } = await searchJobs({ pageSize: limit, page: 1 });
-  return jobs;
+export async function getFeaturedJobs(): Promise<JobWithEmployer[]> {
+  const otherCategories = (Object.keys(JOB_CATEGORY_LABELS) as JobCategory[]).filter(
+    (category) => category !== "au_pair"
+  );
+
+  const [auPairResult, ...otherResults] = await Promise.all([
+    searchJobs({ category: "au_pair", pageSize: 3, page: 1 }),
+    ...otherCategories.map((category) => searchJobs({ category, pageSize: 1, page: 1 })),
+  ]);
+
+  const otherJobs = otherResults.map((result) => result.jobs[0]).filter((job): job is JobWithEmployer => Boolean(job));
+
+  return [...auPairResult.jobs, ...otherJobs];
 }
 
 export async function getJobSuggestions(keyword: string, limit = 6): Promise<JobSuggestion[]> {

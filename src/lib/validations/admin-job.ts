@@ -4,6 +4,7 @@ export const adminJobSchema = z.object({
   title: z.string().trim().min(3, "Enter a job title"),
   employerId: z.string().trim().uuid("Select an employer"),
   category: z.enum([
+    "au_pair",
     "healthcare_caregiving",
     "security",
     "gardening_landscaping",

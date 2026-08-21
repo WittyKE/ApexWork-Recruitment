@@ -14,6 +14,7 @@ import type {
   JobWithEmployer,
   RightToWorkStatus,
 } from "@/lib/supabase/types";
+import { auPairEmployers, auPairJobs } from "@/lib/mock-data-au-pair";
 
 export const mockEmployers: Employer[] = [
   {
@@ -81,6 +82,7 @@ export const mockEmployers: Employer[] = [
     created_at: "2025-07-22T09:00:00Z",
     updated_at: "2025-07-22T09:00:00Z",
   },
+  ...auPairEmployers,
 ];
 
 const employerById = (id: string) => mockEmployers.find((e) => e.id === id)!;
@@ -484,6 +486,7 @@ export const mockJobs: Job[] = [
     created_at: "2026-03-01T09:00:00Z",
     updated_at: "2026-08-01T08:00:00Z",
   },
+  ...auPairJobs,
 ];
 
 export const mockJobsWithEmployer: JobWithEmployer[] = mockJobs.map((job) => ({

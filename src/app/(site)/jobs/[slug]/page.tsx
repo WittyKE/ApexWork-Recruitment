@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { buttonVariants } from "@/components/ui/button";
 import { JobCard } from "@/components/site/job-card";
+import { AuPairJobDetail } from "@/components/site/au-pair-job-detail";
 import { getJobBySlug, getRelatedJobs } from "@/lib/data/jobs";
 import { EMPLOYMENT_TYPE_LABELS, isJobAcceptingApplications, JOB_CATEGORY_LABELS } from "@/lib/supabase/types";
 import { cn } from "@/lib/utils";
@@ -15,6 +16,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const job = await getJobBySlug(slug);
   if (!job) return { title: "Job not found" };
+  if (job.auPair) {
+    return {
+      title: `Au Pair with Family ${job.auPair.familyName} — ${job.auPair.country}`,
+      description: job.description.slice(0, 155),
+    };
+  }
   return {
     title: `${job.title} at ${job.employer.company_name}`,
     description: job.description.slice(0, 155),
@@ -27,6 +34,11 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
   if (!job) notFound();
 
   const relatedJobs = await getRelatedJobs(job, 3);
+
+  if (job.category === "au_pair" && job.auPair) {
+    return <AuPairJobDetail job={job} relatedJobs={relatedJobs} />;
+  }
+
   const applyHref = `/apply/skilled?job=${job.slug}`;
   const acceptingApplications = isJobAcceptingApplications(job);
 

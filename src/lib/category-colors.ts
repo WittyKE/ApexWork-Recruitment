@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import type { JobCategory } from "@/lib/supabase/types";
 
 export const CATEGORY_ACCENTS: Record<JobCategory, string> = {
+  au_pair: "var(--chart-4)",
   healthcare_caregiving: "var(--chart-5)",
   security: "var(--chart-7)",
   gardening_landscaping: "var(--chart-3)",

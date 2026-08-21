@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   BadgeCheck,
+  Baby,
   Briefcase,
   FileCheck2,
   HeartHandshake,
@@ -25,7 +26,7 @@ import { siteConfig } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
 export default async function HomePage() {
-  const featuredJobs = await getFeaturedJobs(6);
+  const featuredJobs = await getFeaturedJobs();
 
   return (
     <>
@@ -209,13 +210,14 @@ export default async function HomePage() {
 
       {/* ROLE CATEGORIES STRIP */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-          <CategoryChip index={0} icon={<Stethoscope className="size-5" />} label="Healthcare & Caregiving" category="healthcare_caregiving" />
-          <CategoryChip index={1} icon={<ShieldCheck className="size-5" />} label="Security" category="security" />
-          <CategoryChip index={2} icon={<Users className="size-5" />} label="Gardening & Landscaping" category="gardening_landscaping" />
-          <CategoryChip index={3} icon={<Briefcase className="size-5" />} label="IT & Technology" category="it_technology" />
-          <CategoryChip index={4} icon={<HeartHandshake className="size-5" />} label="Engineering" category="engineering" />
-          <CategoryChip index={5} icon={<FileCheck2 className="size-5" />} label="Logistics & Warehouse" category="logistics_warehouse" />
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7">
+          <CategoryChip index={0} icon={<Baby className="size-5" />} label="Au Pair" category="au_pair" />
+          <CategoryChip index={1} icon={<Stethoscope className="size-5" />} label="Healthcare & Caregiving" category="healthcare_caregiving" />
+          <CategoryChip index={2} icon={<ShieldCheck className="size-5" />} label="Security" category="security" />
+          <CategoryChip index={3} icon={<Users className="size-5" />} label="Gardening & Landscaping" category="gardening_landscaping" />
+          <CategoryChip index={4} icon={<Briefcase className="size-5" />} label="IT & Technology" category="it_technology" />
+          <CategoryChip index={5} icon={<HeartHandshake className="size-5" />} label="Engineering" category="engineering" />
+          <CategoryChip index={6} icon={<FileCheck2 className="size-5" />} label="Logistics & Warehouse" category="logistics_warehouse" />
         </div>
       </section>
     </>

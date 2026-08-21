@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Briefcase, MapPin, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { AuPairJobCard } from "@/components/site/au-pair-job-card";
 import { categoryAccent, categoryAccentStyle } from "@/lib/category-colors";
 import { EMPLOYMENT_TYPE_LABELS, JOB_CATEGORY_LABELS, type JobWithEmployer } from "@/lib/supabase/types";
 
@@ -15,6 +16,10 @@ function initials(name: string) {
 }
 
 export function JobCard({ job, index = 0 }: { job: JobWithEmployer; index?: number }) {
+  if (job.category === "au_pair" && job.auPair) {
+    return <AuPairJobCard job={job} index={index} />;
+  }
+
   const accent = categoryAccent(job.category);
 
   return (

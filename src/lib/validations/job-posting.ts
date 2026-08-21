@@ -3,6 +3,7 @@ import { z } from "zod";
 export const jobPostingSchema = z.object({
   title: z.string().trim().min(3, "Enter a job title"),
   category: z.enum([
+    "au_pair",
     "healthcare_caregiving",
     "security",
     "gardening_landscaping",

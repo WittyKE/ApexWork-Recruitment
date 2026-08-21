@@ -17,6 +17,7 @@ export type RightToWorkStatus =
 export type EssentialRoleType = "caregiver" | "security" | "gardener" | "general_labour";
 
 export type JobCategory =
+  | "au_pair"
   | "healthcare_caregiving"
   | "security"
   | "gardening_landscaping"
@@ -104,6 +105,32 @@ export interface EssentialProfile {
   updated_at: string;
 }
 
+export interface AuPairPreferences {
+  gender: string;
+  ageRange: string;
+  region: string;
+  languages: string[];
+  languageLevel: string;
+  food: string;
+  smoking: string;
+}
+
+export interface AuPairListing {
+  familyName: string;
+  countryFlag: string;
+  country: string;
+  children: number[];
+  startWindow: string;
+  duration: string;
+  languages: string[];
+  occupation: string;
+  highlight: string;
+  familyDescription: string;
+  uniqueExperience: string;
+  preferences: AuPairPreferences;
+  images: string[];
+}
+
 export interface Job {
   id: string;
   employer_id: string;
@@ -122,6 +149,7 @@ export interface Job {
   expires_at: string | null;
   created_at: string;
   updated_at: string;
+  auPair?: AuPairListing;
 }
 
 export interface JobWithEmployer extends Job {
@@ -163,6 +191,7 @@ export interface AuditLog {
 }
 
 export const JOB_CATEGORY_LABELS: Record<JobCategory, string> = {
+  au_pair: "Au Pair",
   healthcare_caregiving: "Healthcare & Caregiving",
   security: "Security",
   gardening_landscaping: "Gardening & Landscaping",
