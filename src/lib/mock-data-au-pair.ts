@@ -1,8 +1,8 @@
 // Fabricated Au Pair family listings used for the "Au Pair" job category.
 // Generated the same way as src/lib/mock-data.ts (no live backend needed).
-// Photos are sourced live from LoremFlickr (real, freely licensed Flickr
-// photos matched by keyword) rather than hand-picked stock IDs, so every
-// image resolves to an actual photograph without relying on a guessed URL.
+// Photos are hand-picked, individually verified Unsplash photo IDs (real
+// photography, free to use under the Unsplash License) rather than
+// hotlinked search-engine results or guessed URLs.
 
 import type { AuPairPreferences, Employer, Job } from "@/lib/supabase/types";
 
@@ -21,15 +21,11 @@ interface AuPairSeed {
   familyDescription: string;
   uniqueExperience: string;
   preferences: AuPairPreferences;
-  imageTags: string;
+  images: string[];
   publishedAt: string;
   status: "published" | "closed";
   expiresAt?: string;
   verified: boolean;
-}
-
-function photoUrl(tags: string, lock: number) {
-  return `https://loremflickr.com/640/480/${tags}?lock=${lock}`;
 }
 
 const SEEDS: AuPairSeed[] = [
@@ -58,7 +54,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "family,netherlands,children",
+    images: [
+      "https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1581998392741-67879e0ef04a?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-18T09:14:00Z",
     status: "published",
     verified: true,
@@ -88,7 +88,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "amsterdam,family,canal",
+    images: [
+      "https://images.unsplash.com/photo-1717180436987-089b88a2d782?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1717753045265-fa6ab160384a?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1602255680702-c47261041a97?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-06-02T07:45:00Z",
     status: "published",
     verified: true,
@@ -118,7 +122,11 @@ const SEEDS: AuPairSeed[] = [
       food: "Vegetarian-friendly kitchen",
       smoking: "No smoking",
     },
-    imageTags: "munich,family,alps",
+    images: [
+      "https://images.unsplash.com/photo-1665393717290-361bfe403e83?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559054109-82d938dac629?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-07-11T14:22:00Z",
     status: "published",
     verified: true,
@@ -148,7 +156,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "austria,family,mountains",
+    images: [
+      "https://images.unsplash.com/photo-1603317581682-c3c3e3a3a588?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1560707854-fb9a10eeaace?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1542948843-bf19f4f535cf?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-05-14T11:05:00Z",
     status: "published",
     verified: false,
@@ -178,7 +190,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "belgium,family,city",
+    images: [
+      "https://images.unsplash.com/photo-1761839258803-21515f43190c?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1628191012047-e789922abfdf?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1605713288610-00c1c630ca1e?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-06-25T16:38:00Z",
     status: "published",
     verified: true,
@@ -208,7 +224,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "zurich,family,lake",
+    images: [
+      "https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1502143135356-dcdb8a9a3da6?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1503431153573-96e959f4d9b7?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-04-09T08:52:00Z",
     status: "closed",
     expiresAt: "2026-07-05T23:59:00Z",
@@ -239,7 +259,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "groningen,family,bicycle",
+    images: [
+      "https://images.unsplash.com/photo-1610898764137-d44d5aa98af9?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1531984929664-2fb2be468d3e?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1607453998774-d533f65dac99?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-04T19:10:00Z",
     status: "published",
     verified: true,
@@ -269,7 +293,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "hamburg,family,harbour",
+    images: [
+      "https://images.unsplash.com/photo-1606474226448-4aa808468efc?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1560328055-e938bb2ed50a?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1524503033411-c9566986fc8f?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-07-29T06:30:00Z",
     status: "published",
     verified: true,
@@ -299,7 +327,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "antwerp,family,children",
+    images: [
+      "https://images.unsplash.com/photo-1542385151-efd9000785a0?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1627764940620-90393d0e8c34?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1685580388390-576100ae9ce3?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-03-02T10:00:00Z",
     status: "closed",
     expiresAt: "2026-06-20T23:59:00Z",
@@ -330,7 +362,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "denmark,family,beach",
+    images: [
+      "https://images.unsplash.com/photo-1496275068113-fff8c90750d1?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1451471016731-e963a8588be8?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1592222491987-aebdb920e1a0?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-06-16T13:47:00Z",
     status: "published",
     verified: true,
@@ -360,7 +396,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "berlin,family,park",
+    images: [
+      "https://images.unsplash.com/photo-1601909331597-c80bb4c948c2?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1614113036347-9f60df80730a?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1569870614214-04b2aef402c6?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-09T20:03:00Z",
     status: "published",
     verified: true,
@@ -390,7 +430,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "haarlem,family,twins",
+    images: [
+      "https://images.unsplash.com/photo-1581546104075-e4ad519034bf?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1534982841079-afde227ada8f?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1647627611823-d08fa901678e?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-05-27T09:58:00Z",
     status: "published",
     verified: true,
@@ -420,7 +464,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "bern,family,river",
+    images: [
+      "https://images.unsplash.com/photo-1656177999031-0d3e8e62317a?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1560707857-b897819e06fb?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1644941002474-6ee8ab0ee8cb?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-14T15:20:00Z",
     status: "published",
     verified: true,
@@ -450,7 +498,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "maastricht,family,children",
+    images: [
+      "https://images.unsplash.com/photo-1742522450616-a2cf0cba1274?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1533222481259-ce20eda1e20b?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1502781252888-9143ba7f074e?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-07-06T05:59:00Z",
     status: "published",
     verified: true,
@@ -480,7 +532,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "cologne,family,baby",
+    images: [
+      "https://images.unsplash.com/photo-1582486225644-aeacf6aa0b1b?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1557176278-3326a3193580?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1638202948587-ac48463ddb1f?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-01T12:15:00Z",
     status: "published",
     verified: false,
@@ -510,7 +566,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "luxembourg,family,castle",
+    images: [
+      "https://images.unsplash.com/photo-1509924603848-aca5e5f276d7?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1655009316723-e4af5fe7afe1?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1517554558809-9b4971b38f39?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-19T08:41:00Z",
     status: "published",
     verified: true,
@@ -540,7 +600,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "beach,family,summer",
+    images: [
+      "https://images.unsplash.com/photo-1506456331400-7088248a8db1?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1597524678053-5e6fef52d8a3?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1626736608558-174e8dfa2aa6?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-20T17:26:00Z",
     status: "published",
     verified: true,
@@ -570,7 +634,11 @@ const SEEDS: AuPairSeed[] = [
       food: "Vegetarian household",
       smoking: "No smoking",
     },
-    imageTags: "forest,family,hiking",
+    images: [
+      "https://images.unsplash.com/photo-1534396708547-d8e912eb38ba?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1665393717338-dd07628bf667?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555791019-72d3af01da82?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-06-30T09:33:00Z",
     status: "published",
     verified: true,
@@ -600,7 +668,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "bruges,family,canal",
+    images: [
+      "https://images.unsplash.com/photo-1605812830455-2fadc55bc4ba?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1761839258568-fd466a93f68b?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1760084836111-b384c6d32104?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-02-19T09:00:00Z",
     status: "closed",
     expiresAt: "2026-05-31T23:59:00Z",
@@ -631,7 +703,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "vienna,family,palace",
+    images: [
+      "https://images.unsplash.com/photo-1527490087278-9c75be0b8052?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559225306-3f60aa7b39a3?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-07-22T18:12:00Z",
     status: "published",
     verified: true,
@@ -661,7 +737,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "vineyard,family,germany",
+    images: [
+      "https://images.unsplash.com/photo-1616337866123-ea967bfd7837?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1621354598022-16599af1b8b2?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1623249288685-835abe0123b4?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-05-05T07:18:00Z",
     status: "published",
     verified: true,
@@ -691,7 +771,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "leiden,family,books",
+    images: [
+      "https://images.unsplash.com/photo-1715602109442-644d0f79d655?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1601193708180-afe6737e5636?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1770261431829-919301b84de3?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-16T10:47:00Z",
     status: "published",
     verified: false,
@@ -721,7 +805,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "countryside,family,belgium",
+    images: [
+      "https://images.unsplash.com/photo-1761839258075-585182da7521?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1782212790904-5b658b182ffc?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1597413545419-4013431dbfec?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-03-27T13:29:00Z",
     status: "published",
     verified: false,
@@ -751,7 +839,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "dresden,family,river",
+    images: [
+      "https://images.unsplash.com/photo-1531983412531-1f49a365ffed?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1541692641319-981cc79ee10a?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-06-11T21:04:00Z",
     status: "published",
     verified: true,
@@ -781,7 +873,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "delft,family,canal",
+    images: [
+      "https://images.unsplash.com/photo-1501686637-b7aa9c48a882?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1514925312285-7a2c94c2c095?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1603367563698-67012943fd67?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-13T11:36:00Z",
     status: "published",
     verified: true,
@@ -811,7 +907,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "lucerne,family,mountains",
+    images: [
+      "https://images.unsplash.com/photo-1783407290434-f8c66397fdd3?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1622498137457-1eb887d9147d?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1610194978275-8eee57ceafdd?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-07-17T06:52:00Z",
     status: "published",
     verified: true,
@@ -841,7 +941,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "copenhagen,family,bicycle",
+    images: [
+      "https://images.unsplash.com/photo-1681295695033-9c40d6586845?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1673890686673-005b85b14e53?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1620420678517-d45e226dfe6c?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-06T14:59:00Z",
     status: "published",
     verified: true,
@@ -871,7 +975,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "eindhoven,family,park",
+    images: [
+      "https://images.unsplash.com/photo-1601294281485-2b5a214689dc?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1564156280315-1d42b4651629?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1607211851821-8be3cd6146f0?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-11T09:07:00Z",
     status: "published",
     verified: true,
@@ -901,7 +1009,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "nuremberg,family,toys",
+    images: [
+      "https://images.unsplash.com/photo-1440288736878-766bd5839edb?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1541335370584-dc83f3ad05b1?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1628191013647-5640e14ded54?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-06-22T08:00:00Z",
     status: "published",
     verified: false,
@@ -931,7 +1043,11 @@ const SEEDS: AuPairSeed[] = [
       food: "All Foods",
       smoking: "No smoking",
     },
-    imageTags: "leuven,family,children",
+    images: [
+      "https://images.unsplash.com/photo-1628191011227-522c7c3f0af9?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1539920951450-2b2d59cff66d?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1554200991-de2527940354?w=1200&q=80&auto=format&fit=crop",
+    ],
     publishedAt: "2026-08-21T07:30:00Z",
     status: "published",
     verified: true,
@@ -961,7 +1077,7 @@ export const auPairEmployers: Employer[] = SEEDS.map((seed, i) => ({
 
 export const auPairJobs: Job[] = SEEDS.map((seed, i) => {
   const childLabel = seed.children.length === 1 ? "1 Child" : `${seed.children.length} Children`;
-  const images = [1, 2, 3].map((n) => photoUrl(seed.imageTags, i * 3 + n));
+  const images = seed.images;
 
   return {
     id: `job-aupair-${i + 1}`,
